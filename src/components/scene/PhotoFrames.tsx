@@ -38,9 +38,13 @@ const FRAMES: FrameDef[] = [
   },
 ];
 
+// Rendered as a child of the BackWall group, so coordinates are LOCAL to the
+// wall. Wall center is at world (0, WALL_HEIGHT/2, -ROOM_HALF). The wall is
+// 0.15 thick, so its front face is at local z=+0.075. Frames sit just in
+// front at local z=+0.08.
 export function PhotoFrames() {
   return (
-    <group position={[-1.6, 2.8, -4.92]}>
+    <group position={[-1.6, 0.3, 0.08]}>
       {FRAMES.map((f, i) => {
         const col = i % 2;
         const row = Math.floor(i / 2);
@@ -70,21 +74,34 @@ function Frame({
     config: config.wobbly,
   });
 
+  const handleClick = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
+    window.open(SOCIAL_LINKS[def.key], "_blank", "noopener,noreferrer");
+  };
+
   return (
     <animated.group
       position={position}
       scale={scale}
       rotation-y={rotY}
     >
+      {/* Invisible enlarged tap target — sits in front of the visible frame
+          and absorbs touch events with extra margin (1.4× geometry). */}
+      <mesh
+        position={[0, 0, 0.08]}
+        onPointerOver={onPointerOver}
+        onPointerOut={onPointerOut}
+        onClick={handleClick}
+      >
+        <boxGeometry args={[1.2, 1.2, 0.18]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
       {/* Outer frame */}
       <mesh
         castShadow
         onPointerOver={onPointerOver}
         onPointerOut={onPointerOut}
-        onClick={(e) => {
-          e.stopPropagation();
-          window.open(SOCIAL_LINKS[def.key], "_blank", "noopener,noreferrer");
-        }}
+        onClick={handleClick}
       >
         <boxGeometry args={[0.85, 0.85, 0.06]} />
         <animated.meshStandardMaterial

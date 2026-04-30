@@ -2,23 +2,32 @@ import { Html } from "@react-three/drei";
 import { useHotspotHover } from "../../hooks/useHotspotHover";
 import { useSceneStore } from "../../store/useSceneStore";
 
-// Whiteboard mounted on the left wall (-x), in front of the photo frames area visually.
+// Whiteboard mounted on the left wall — rendered as a child of LeftWall
+// (world center: -5, 2.5, 0). Coordinates are LOCAL to that wall.
 export function Whiteboard() {
   const setHotspot = useSceneStore((s) => s.setHotspot);
   const { hovered, onPointerOver, onPointerOut } = useHotspotHover("whiteboard");
   const glow = hovered ? 0.5 : 0;
 
+  const handleClick = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
+    setHotspot("whiteboard");
+  };
+
   return (
     <group
-      position={[-4.92, 2.6, -1]}
+      position={[0.08, 0.1, -1]}
       rotation={[0, Math.PI / 2, 0]}
       onPointerOver={onPointerOver}
       onPointerOut={onPointerOut}
-      onClick={(e) => {
-        e.stopPropagation();
-        setHotspot("whiteboard");
-      }}
+      onClick={handleClick}
     >
+      {/* Invisible enlarged tap target — covers the entire whiteboard with a
+          generous halo for finger taps. */}
+      <mesh position={[0, 0, 0.12]}>
+        <boxGeometry args={[2.9, 2.0, 0.2]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
       {/* Frame */}
       <mesh castShadow>
         <boxGeometry args={[2.6, 1.7, 0.06]} />

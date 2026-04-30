@@ -1,19 +1,10 @@
-import { motion } from "framer-motion";
 import { BIO } from "../../config/content";
 import { SOCIAL_LINKS } from "../../config/links";
+import { Panel } from "./Panel";
 
 export function AboutPanel() {
   return (
-    <motion.aside
-      initial={{ x: "100%", opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: "100%", opacity: 0 }}
-      transition={{ type: "spring", stiffness: 240, damping: 28 }}
-      className="fixed top-0 right-0 bottom-0 w-full md:w-[420px] z-20 bg-navy/95 backdrop-blur-md border-l border-gold/20 pt-24 px-8 pb-8 overflow-y-auto"
-    >
-      <h2 className="text-gold font-display text-3xl tracking-wider mb-2">
-        ABOUT ME
-      </h2>
+    <Panel title="ABOUT ME">
       <div className="text-white/90 text-lg font-display tracking-wide mb-1">
         {BIO.name}
       </div>
@@ -35,13 +26,13 @@ export function AboutPanel() {
               href={v}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-1.5 rounded-md border border-gold/40 text-gold text-sm hover:bg-gold/10 transition"
+              className="px-3 py-2 rounded-md border border-gold/40 text-gold text-sm hover:bg-gold/10 active:bg-gold/20 transition min-h-[44px] flex items-center"
             >
               {k}
             </a>
           ))}
         </div>
       </div>
-    </motion.aside>
+    </Panel>
   );
 }

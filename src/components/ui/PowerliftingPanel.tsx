@@ -1,18 +1,10 @@
 import { motion } from "framer-motion";
 import { BODYWEIGHT_KG, POWERLIFTING_PRS } from "../../config/content";
+import { Panel } from "./Panel";
 
 export function PowerliftingPanel() {
   return (
-    <motion.aside
-      initial={{ x: "100%", opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: "100%", opacity: 0 }}
-      transition={{ type: "spring", stiffness: 240, damping: 28 }}
-      className="fixed top-0 right-0 bottom-0 w-full md:w-[420px] z-20 bg-navy/95 backdrop-blur-md border-l border-gold/20 pt-24 px-8 pb-8 overflow-y-auto"
-    >
-      <h2 className="text-gold font-display text-3xl tracking-wider mb-2">
-        POWERLIFTING
-      </h2>
+    <Panel title="POWERLIFTING">
       <p className="text-white/70 mb-6">
         Strength is a compounding investment. Train hard, recover harder.
       </p>
@@ -41,13 +33,11 @@ export function PowerliftingPanel() {
               <span className="text-white font-display text-4xl tracking-wider">
                 {pr.weight}
               </span>
-              <span className="text-gold/80 font-display text-lg">
-                {pr.unit}
-              </span>
+              <span className="text-gold/80 font-display text-lg">{pr.unit}</span>
             </div>
           </motion.div>
         ))}
       </div>
-    </motion.aside>
+    </Panel>
   );
 }

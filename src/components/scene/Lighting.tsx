@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { Color } from "three";
 import type { DirectionalLight } from "three";
 import { Environment, ContactShadows } from "@react-three/drei";
+import { useDeviceTier } from "../../hooks/useDeviceTier";
 
 const WARM = new Color("#fff5e0");
 const COOL = new Color("#e8f0ff");
@@ -11,6 +12,9 @@ const tmpColor = new Color();
 
 export function Lighting() {
   const sunRef = useRef<DirectionalLight>(null);
+  const tier = useDeviceTier();
+  const shadowMapSize = tier === "mobile" ? 1024 : 2048;
+  const contactShadowRes = tier === "mobile" ? 256 : 512;
 
   useFrame((state) => {
     if (!sunRef.current) return;
@@ -34,8 +38,8 @@ export function Lighting() {
         intensity={1.6}
         color="#ffd9a3"
         castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
+        shadow-mapSize-width={shadowMapSize}
+        shadow-mapSize-height={shadowMapSize}
         shadow-camera-near={0.5}
         shadow-camera-far={40}
         shadow-camera-left={-12}
@@ -61,7 +65,8 @@ export function Lighting() {
         opacity={0.45}
         scale={20}
         blur={2.4}
-        far={6}
+        far={tier === "mobile" ? 4 : 6}
+        resolution={contactShadowRes}
       />
     </>
   );

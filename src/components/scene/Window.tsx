@@ -1,11 +1,12 @@
-// Window mounted on the back wall (-z), right side, next to the powerlifting rack.
+// Window mounted on the back wall, right side.
+// Coordinates are LOCAL to the BackWall group (world center: 0, 2.5, -5).
 
 const FRAME_COLOR = "#f6f1e7";
 
 export function Window() {
-  const x = 3.2;
-  const y = 2.6;
-  const z = -4.92;
+  const x = 3.2;     // local x relative to wall center
+  const y = 0.1;     // ~world y 2.6 (wall center y is 2.5)
+  const z = 0.08;    // just in front of wall front face
   const w = 2.4;
   const h = 2.2;
   const t = 0.06;

@@ -8,6 +8,7 @@ import { Text } from "@react-three/drei";
 import type { Mesh, MeshStandardMaterial } from "three";
 import { useHotspotHover } from "../../hooks/useHotspotHover";
 import { useSceneStore } from "../../store/useSceneStore";
+import { useDeviceTier } from "../../hooks/useDeviceTier";
 
 const BLACK = "#1a1a1a";
 const DARK = "#2a2a2a";
@@ -24,16 +25,26 @@ const TYPEWRITER_SNIPPETS = [
 export function Desk() {
   const setHotspot = useSceneStore((s) => s.setHotspot);
   const { hovered, onPointerOver, onPointerOut } = useHotspotHover("desk");
+  const tier = useDeviceTier();
+
+  const handleClick = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
+    setHotspot("aboutFrames");
+  };
 
   return (
     <group
       position={[1.6, 0, -4.2]}
       onPointerOver={onPointerOver}
       onPointerOut={onPointerOut}
-      onClick={(e) => {
-        e.stopPropagation();
-        setHotspot("aboutFrames");
-      }}>
+      onClick={handleClick}>
+      {/* Invisible enlarged tap target covering the desk surface + monitors.
+          Sits low so it doesn't block other clickable items in front. */}
+      <mesh position={[1.0, 1.0, 0.0]}>
+        <boxGeometry args={[3.6, 1.4, 1.4]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
+
       {/* Long arm of the L (running along -z wall) */}
       <mesh position={[1.2, 0.78, 0]} castShadow receiveShadow>
         <boxGeometry args={[3.2, 0.06, 1.0]} />
@@ -111,7 +122,7 @@ export function Desk() {
         <meshStandardMaterial color="#101010" roughness={0.5} />
       </mesh>
 
-      {/* Mug + steam */}
+      {/* Mug + steam (steam particles skipped on mobile for perf) */}
       <group position={[2.55, 0.81, -0.05]}>
         <mesh castShadow>
           <cylinderGeometry args={[0.09, 0.07, 0.16, 24]} />
@@ -121,7 +132,7 @@ export function Desk() {
           <torusGeometry args={[0.05, 0.018, 8, 16, Math.PI]} />
           <meshStandardMaterial color="#f4b942" roughness={0.5} />
         </mesh>
-        <MugSteam />
+        {tier !== "mobile" && <MugSteam />}
       </group>
 
       {/* Notebook stack */}

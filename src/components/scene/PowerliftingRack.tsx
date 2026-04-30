@@ -15,6 +15,11 @@ export function PowerliftingRack() {
   const { hovered, onPointerOver, onPointerOut } = useHotspotHover("rack");
   const glow = hovered ? 0.55 : 0.0;
 
+  const handleClick = (e: { stopPropagation: () => void }) => {
+    e.stopPropagation();
+    setHotspot("rack");
+  };
+
   // Rack sits at +x side (right), against the back wall area.
   return (
     <group
@@ -22,11 +27,15 @@ export function PowerliftingRack() {
       rotation={[0, Math.PI / 4, 0]}
       onPointerOver={onPointerOver}
       onPointerOut={onPointerOut}
-      onClick={(e) => {
-        e.stopPropagation();
-        setHotspot("rack");
-      }}
+      onClick={handleClick}
     >
+      {/* Invisible enlarged tap target wrapping the whole rack volume.
+          Easier to land a finger on than the thin posts. */}
+      <mesh position={[0, 1.4, 0.3]}>
+        <boxGeometry args={[2.8, 2.8, 1.8]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+      </mesh>
+
       {/* Posts (left & right), tall thin boxes */}
       <Post x={-0.7} glow={glow} />
       <Post x={0.7} glow={glow} />

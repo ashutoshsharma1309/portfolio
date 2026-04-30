@@ -18,3 +18,10 @@ canvas {
   outline: none;
   touch-action: none;
 }
+
+/* Block accidental browser pinch-zoom over the canvas only — body-level
+   touch-action stays default so panel scrolling still works. */
+.canvas-wrapper {
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
