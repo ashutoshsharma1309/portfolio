@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: #05080f;
+  font-family: "Russo One", "Bebas Neue", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  outline: none;
+  touch-action: none;
+}
