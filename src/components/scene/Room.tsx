@@ -11,6 +11,8 @@ import { Beanbag } from "./Beanbag";
 import { Plants } from "./Plants";
 import { Rug } from "./Rug";
 import { DustMotes } from "./DustMotes";
+import { SportsTrophy } from "./SportsTrophy";
+import { HackathonTrophy } from "./HackathonTrophy";
 import { useDeviceTier } from "../../hooks/useDeviceTier";
 
 export function Room() {
@@ -35,6 +37,8 @@ export function Room() {
       <PowerliftingRack />
       <Beanbag />
       <Plants />
+      <SportsTrophy />
+      <HackathonTrophy />
       {/* Dust motes are pure ambiance; skip on mobile to save fillrate. */}
       {tier !== "mobile" && <DustMotes />}
     </group>

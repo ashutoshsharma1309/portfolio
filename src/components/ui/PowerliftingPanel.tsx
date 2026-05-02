@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BODYWEIGHT_KG, POWERLIFTING_PRS } from "../../config/content";
+import { POWERLIFTING_PRS, powerlifting } from "../../config/content";
 import { Panel } from "./Panel";
 
 export function PowerliftingPanel() {
@@ -8,15 +8,23 @@ export function PowerliftingPanel() {
       <p className="text-white/70 mb-6">
         Strength is a compounding investment. Train hard, recover harder.
       </p>
-      <div className="mb-6 inline-flex items-baseline gap-2 px-4 py-2 rounded-full border border-gold/40 bg-white/5">
-        <span className="text-gold/70 text-xs uppercase tracking-widest">
+
+      {/* Bodyweight — framed as the weight-class context for the lifts below */}
+      <div className="pb-5 mb-5 border-b border-yellow-500/20">
+        <div className="text-gold/70 text-xs uppercase tracking-widest mb-1">
           Bodyweight
-        </span>
-        <span className="text-white font-display text-xl tracking-wider">
-          {BODYWEIGHT_KG}
-        </span>
-        <span className="text-gold/80 font-display text-sm">kg</span>
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span className="text-white font-display text-3xl tracking-wider">
+            {powerlifting.bodyweight.value}
+          </span>
+          <span className="text-gold/80 font-display text-lg">
+            {powerlifting.bodyweight.unit}
+          </span>
+        </div>
       </div>
+
+      {/* Lift PRs */}
       <div className="space-y-4">
         {POWERLIFTING_PRS.map((pr, i) => (
           <motion.div

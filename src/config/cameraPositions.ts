@@ -6,7 +6,9 @@ export type HotspotKey =
   | "aboutFrames"
   | "projectsDesk"
   | "rack"
-  | "whiteboard";
+  | "whiteboard"
+  | "sportsTrophy"
+  | "hackathonTrophy";
 
 export interface CameraView {
   position: Vector3Tuple;
@@ -42,6 +44,16 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       target: [-4.9, 2.6, -1],
       fov: 34,
     },
+    sportsTrophy: {
+      position: [5.5, 1.6, 5.5],
+      target: [4.5, 0.5, 3.8],
+      fov: 28,
+    },
+    hackathonTrophy: {
+      position: [1.5, 3.2, 2.5],
+      target: [0.5, 2.8, -1.5],
+      fov: 28,
+    },
   },
   tablet: {
     default: { position: [12, 10, 12], target: [0, 1.4, 0], fov: 38 },
@@ -64,6 +76,16 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       position: [3.5, 3.6, 5.0],
       target: [-4.9, 2.6, -1],
       fov: 42,
+    },
+    sportsTrophy: {
+      position: [6.0, 1.8, 6.0],
+      target: [4.5, 0.5, 3.8],
+      fov: 35,
+    },
+    hackathonTrophy: {
+      position: [1.8, 3.4, 3],
+      target: [0.5, 2.8, -1.5],
+      fov: 35,
     },
   },
   mobile: {
@@ -90,6 +112,16 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       position: [3.5, 4.0, 5.0],
       target: [-4.9, 2.6, -1],
       fov: 54,
+    },
+    sportsTrophy: {
+      position: [5.8, 1.6, 5.8],
+      target: [4.5, 0.5, 3.8],
+      fov: 42,
+    },
+    hackathonTrophy: {
+      position: [1.5, 3.2, 2.5],
+      target: [0.5, 2.8, -1.5],
+      fov: 42,
     },
   },
 };

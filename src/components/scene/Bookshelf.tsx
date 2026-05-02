@@ -29,6 +29,8 @@ function ShelfPlantFoliage() {
   );
 }
 
+// Bookshelf right end now hosts the hackathon trophy, so we drop the two
+// rightmost books and move the small plant to the left end.
 const BOOK_COLORS = [
   "#a23a2a",
   "#2d4a8a",
@@ -36,33 +38,33 @@ const BOOK_COLORS = [
   "#1f4d2b",
   "#6e2d6a",
   "#102030",
-  "#a05a30",
-  "#2d2d2d",
 ];
 
 export function Bookshelf() {
   return (
     <group position={[2.0, 3.0, -4.78]}>
-      {/* Shelf board */}
+      {/* Shelf board — deepened from 0.32 → 0.55 so the chunkier hackathon
+          trophy doesn't overhang the front edge. */}
       <mesh castShadow receiveShadow>
-        <boxGeometry args={[2.4, 0.06, 0.32]} />
+        <boxGeometry args={[2.4, 0.06, 0.55]} />
         <meshStandardMaterial color={SHELF_COLOR} roughness={0.7} />
       </mesh>
       {/* Brackets */}
-      <mesh position={[-1.0, -0.16, -0.06]}>
-        <boxGeometry args={[0.05, 0.32, 0.18]} />
+      <mesh position={[-1.0, -0.16, -0.1]}>
+        <boxGeometry args={[0.05, 0.32, 0.3]} />
         <meshStandardMaterial color="#222" />
       </mesh>
-      <mesh position={[1.0, -0.16, -0.06]}>
-        <boxGeometry args={[0.05, 0.32, 0.18]} />
+      <mesh position={[1.0, -0.16, -0.1]}>
+        <boxGeometry args={[0.05, 0.32, 0.3]} />
         <meshStandardMaterial color="#222" />
       </mesh>
 
-      {/* Books */}
+      {/* Books — left to middle of the shelf only; right end is for the
+          hackathon trophy. */}
       {BOOK_COLORS.map((c, i) => {
         const w = 0.14 + ((i * 13) % 5) / 60;
         const h = 0.45 + ((i * 19) % 7) / 60;
-        const x = -1.0 + i * 0.18;
+        const x = -0.65 + i * 0.18;
         return (
           <mesh key={i} position={[x, h / 2 + 0.04, 0]} castShadow>
             <boxGeometry args={[w, h, 0.22]} />
@@ -71,8 +73,8 @@ export function Bookshelf() {
         );
       })}
 
-      {/* Small plant on the right end (foliage sways with the others) */}
-      <group position={[0.95, 0.18, 0]}>
+      {/* Small plant relocated to the left end of the shelf. */}
+      <group position={[-1.0, 0.18, 0]}>
         <mesh castShadow>
           <cylinderGeometry args={[0.1, 0.08, 0.18, 16]} />
           <meshStandardMaterial color="#b8633a" roughness={0.9} />

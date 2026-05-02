@@ -24,4 +24,11 @@ canvas {
 .canvas-wrapper {
   touch-action: none;
   -webkit-tap-highlight-color: transparent;
+  cursor: default;
+}
+
+/* Default cursor on the canvas; useHotspotHover toggles it to `pointer`
+   imperatively when a hotspot is hovered. */
+.canvas-wrapper canvas {
+  cursor: inherit;
 }

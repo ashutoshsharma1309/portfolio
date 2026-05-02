@@ -114,7 +114,7 @@ export interface PR {
   unit: "kg" | "lb";
 }
 
-export const BODYWEIGHT_KG = 88;
+export const BODYWEIGHT_KG = 85;
 
 export const POWERLIFTING_PRS: PR[] = [
   { lift: "Squat", weight: "180", unit: "kg" },
@@ -122,4 +122,82 @@ export const POWERLIFTING_PRS: PR[] = [
   { lift: "Deadlift", weight: "215", unit: "kg" },
 ];
 
+// Structured powerlifting object for any future readers — bodyweight as
+// metadata, separated from the lift PRs.
+export const powerlifting = {
+  bodyweight: { value: BODYWEIGHT_KG, unit: "kg" as const },
+  squat: { weight: 180, unit: "kg" as const },
+  bench: { weight: 135, unit: "kg" as const },
+  deadlift: { weight: 215, unit: "kg" as const },
+};
+
 export const WHITEBOARD_TEXT = "WELCOME!\nEnjoy your\nexperience";
+
+// ---------- Trophies / Achievements ----------
+
+export interface Achievement {
+  id: string;
+  title: string;
+  organization?: string;
+  date?: string;
+  description?: string;
+  prize?: string;
+}
+
+export type TrophyCategoryId = "sports" | "hackathons";
+
+export interface TrophyCategory {
+  id: TrophyCategoryId;
+  title: string;
+  subtitle: string;
+  achievements: Achievement[];
+}
+
+export const trophies: Record<TrophyCategoryId, TrophyCategory> = {
+  sports: {
+    id: "sports",
+    title: "SPORTS & ATHLETICS",
+    subtitle: "Anchor on the rope. Last man standing.",
+    achievements: [
+      {
+        id: "tugofwar-vtu",
+        title: "Anchor — VTU Tug of War Team",
+        organization: "Visvesvaraya Technological University",
+        description:
+          "Selected as anchor for the VTU university-level tug of war team — the last position on the rope, responsible for locking the team in place against opposing pulls. Represented the university across inter-collegiate fixtures.",
+      },
+      {
+        id: "tugofwar-inter-hostel",
+        title: "1st Place — Inter-Hostel Tug of War",
+        organization: "BMSIT — CSE Hostel Team",
+        description:
+          "Anchored the CSE hostel tug of war team to a 1st place finish in the inter-hostel championship. Held the line in three consecutive rounds against heavier opposing teams.",
+        prize: "🥇 Gold",
+      },
+      {
+        id: "tugofwar-inter-dept",
+        title: "1st Place — Inter-Department Tug of War",
+        organization: "BMSIT — CSE Department Team",
+        description:
+          "Anchored the CSE department tug of war team to a 1st place finish in the inter-departmental championship. Built and trained the team's pulling sequence in the lead-up to the event.",
+        prize: "🥇 Gold",
+      },
+    ],
+  },
+  hackathons: {
+    id: "hackathons",
+    title: "HACKATHONS & TECH WINS",
+    subtitle: "Built fast, shipped faster.",
+    achievements: [
+      {
+        id: "placeholder-hackathon-1",
+        title: "Achievement Title",
+        organization: "Hackathon / Competition Name",
+        date: "Month Year",
+        description:
+          "Short description of what this win was. Replace with real content.",
+        prize: "Optional — cash prize, swag, accelerator slot, etc.",
+      },
+    ],
+  },
+};

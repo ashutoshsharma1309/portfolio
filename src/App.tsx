@@ -7,6 +7,8 @@ import { ProjectsPanel } from "./components/ui/ProjectsPanel";
 import { PowerliftingPanel } from "./components/ui/PowerliftingPanel";
 import { WhiteboardPanel } from "./components/ui/WhiteboardPanel";
 import { LoadingScreen } from "./components/ui/LoadingScreen";
+import { TrophyPanel } from "./components/ui/TrophyPanel";
+import { trophies } from "./config/content";
 import { useSceneStore } from "./store/useSceneStore";
 import { useDeviceTier } from "./hooks/useDeviceTier";
 
@@ -60,6 +62,12 @@ export default function App() {
         {active === "projectsDesk" && <ProjectsPanel key="projects" />}
         {active === "rack" && <PowerliftingPanel key="powerlifting" />}
         {active === "whiteboard" && <WhiteboardPanel key="whiteboard" />}
+        {active === "sportsTrophy" && (
+          <TrophyPanel key="sports-trophy" category={trophies.sports} />
+        )}
+        {active === "hackathonTrophy" && (
+          <TrophyPanel key="hackathon-trophy" category={trophies.hackathons} />
+        )}
       </AnimatePresence>
 
       {/* Helpful hint when in default view (desktop only) */}
