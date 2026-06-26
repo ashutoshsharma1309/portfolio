@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useSceneStore } from "../../store/useSceneStore";
+import { BIO } from "../../config/content";
 import type { HotspotKey } from "../../config/cameraPositions";
 
 interface NavItem {
@@ -17,6 +18,7 @@ const NAV_ITEMS: NavItem[] = [
 
 export function TopNav() {
   const setHotspot = useSceneStore((s) => s.setHotspot);
+  const reset = useSceneStore((s) => s.resetToDefault);
   const active = useSceneStore((s) => s.activeHotspot);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -28,12 +30,18 @@ export function TopNav() {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-navy/95 backdrop-blur-sm border-b border-gold/20">
       <div className="max-w-[1400px] mx-auto px-5 md:px-6 py-3 md:py-4 flex items-center justify-between">
-        <motion.div
-          className="text-gold font-display text-lg md:text-2xl tracking-wider select-none"
+        <motion.button
+          onClick={() => {
+            reset();
+            setMobileOpen(false);
+          }}
+          aria-label={`${BIO.name} — back to room`}
+          className="text-gold font-display text-lg md:text-2xl tracking-wider select-none rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
           whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.96 }}
         >
-          PORTFOLIO
-        </motion.div>
+          {BIO.name.toUpperCase()}
+        </motion.button>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex gap-6 lg:gap-8">

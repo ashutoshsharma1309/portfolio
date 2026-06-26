@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Ashutosh Sharma — SWE & ML Engineer">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1628"/>
+      <stop offset="0.55" stop-color="#0b1018"/>
+      <stop offset="1" stop-color="#05080f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.1" r="0.9">
+      <stop offset="0" stop-color="#f4b942" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#f4b942" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g fill="none" stroke="#f4b942" stroke-opacity="0.06" stroke-width="1">
+    <path d="M0 158 H1200 M0 316 H1200 M0 474 H1200 M300 0 V630 M600 0 V630 M900 0 V630"/>
+  </g>
+  <text x="90" y="250" font-family="'Russo One','Bebas Neue',sans-serif" font-size="40" letter-spacing="14" fill="#f4b942" fill-opacity="0.8">PORTFOLIO</text>
+  <text x="86" y="360" font-family="'Russo One','Bebas Neue',sans-serif" font-size="92" letter-spacing="2" fill="#ffffff">Ashutosh Sharma</text>
+  <text x="90" y="430" font-family="system-ui,sans-serif" font-size="36" fill="#ffffff" fill-opacity="0.7">SWE &amp; ML Engineer</text>
+  <g font-family="system-ui,sans-serif" font-size="24" fill="#f4b942" fill-opacity="0.9">
+    <rect x="90" y="476" width="220" height="48" rx="24" fill="#f4b942" fill-opacity="0.08" stroke="#f4b942" stroke-opacity="0.3"/>
+    <text x="120" y="506">Full-Stack</text>
+    <rect x="330" y="476" width="250" height="48" rx="24" fill="#f4b942" fill-opacity="0.08" stroke="#f4b942" stroke-opacity="0.3"/>
+    <text x="360" y="506">Machine Learning</text>
+    <rect x="600" y="476" width="290" height="48" rx="24" fill="#f4b942" fill-opacity="0.08" stroke="#f4b942" stroke-opacity="0.3"/>
+    <text x="630" y="506">Competitive Programming</text>
+  </g>
+</svg>

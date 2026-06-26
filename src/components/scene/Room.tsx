@@ -14,9 +14,11 @@ import { DustMotes } from "./DustMotes";
 import { SportsTrophy } from "./SportsTrophy";
 import { HackathonTrophy } from "./HackathonTrophy";
 import { useDeviceTier } from "../../hooks/useDeviceTier";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 export function Room() {
   const tier = useDeviceTier();
+  const reducedMotion = usePrefersReducedMotion();
   return (
     <group>
       <Walls />
@@ -39,8 +41,9 @@ export function Room() {
       <Plants />
       <SportsTrophy />
       <HackathonTrophy />
-      {/* Dust motes are pure ambiance; skip on mobile to save fillrate. */}
-      {tier !== "mobile" && <DustMotes />}
+      {/* Dust motes are pure ambiance; skip on mobile to save fillrate and
+          when the user prefers reduced motion. */}
+      {tier !== "mobile" && !reducedMotion && <DustMotes />}
     </group>
   );
 }

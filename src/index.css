@@ -32,3 +32,24 @@ canvas {
 .canvas-wrapper canvas {
   cursor: inherit;
 }
+
+/* Visible focus ring for keyboard users only (mouse clicks won't trigger it).
+   Components can opt into a custom ring via focus-visible:ring-* utilities. */
+:focus-visible {
+  outline: 2px solid #f4b942;
+  outline-offset: 2px;
+}
+
+/* Respect the OS "reduce motion" setting as a global safety net. JS-driven
+   (framer-motion / r3f) animations are handled in code via
+   usePrefersReducedMotion; this neutralizes any remaining CSS animations. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

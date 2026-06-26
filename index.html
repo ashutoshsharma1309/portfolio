@@ -5,18 +5,67 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0a1628" />
-    <title>Ashutosh Sharma Portfolio</title>
-    <meta name="description" content="Ashutosh Sharma — SWE & ML Engineer. Interactive isometric portfolio." />
+
+    <title>Ashutosh Sharma — SWE &amp; ML Engineer · Portfolio</title>
+    <meta
+      name="description"
+      content="Ashutosh Sharma — Software & Machine Learning Engineer. An interactive isometric 3D portfolio of full-stack, ML, and systems projects."
+    />
+    <meta name="author" content="Ashutosh Sharma" />
+    <meta
+      name="keywords"
+      content="Ashutosh Sharma, Software Engineer, Machine Learning Engineer, Full-Stack Developer, React, PyTorch, portfolio"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="color-scheme" content="dark" />
 
     <!-- Open Graph / link-share preview -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Ashutosh Sharma Portfolio" />
-    <meta property="og:description" content="Ashutosh Sharma — SWE & ML Engineer. Interactive isometric portfolio." />
+    <meta property="og:site_name" content="Ashutosh Sharma" />
+    <meta property="og:title" content="Ashutosh Sharma — SWE & ML Engineer · Portfolio" />
+    <meta
+      property="og:description"
+      content="An interactive isometric 3D portfolio of full-stack, ML, and systems projects."
+    />
+    <meta property="og:image" content="/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ashutosh Sharma — SWE & ML Engineer" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ashutosh Sharma Portfolio" />
-    <meta name="twitter:description" content="Ashutosh Sharma — SWE & ML Engineer. Interactive isometric portfolio." />
+    <meta name="twitter:title" content="Ashutosh Sharma — SWE & ML Engineer · Portfolio" />
+    <meta
+      name="twitter:description"
+      content="An interactive isometric 3D portfolio of full-stack, ML, and systems projects."
+    />
+    <meta name="twitter:image" content="/og-image.svg" />
+
+    <!-- Structured data: helps recruiters' tools / search build a rich profile -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Ashutosh Sharma",
+        "jobTitle": "Software & Machine Learning Engineer",
+        "description": "SWE & ML Engineer building end-to-end systems — from training ML models to shipping React frontends.",
+        "knowsAbout": [
+          "Software Engineering",
+          "Machine Learning",
+          "Full-Stack Development",
+          "React",
+          "PyTorch",
+          "Competitive Programming"
+        ],
+        "sameAs": [
+          "https://github.com/ashutoshsharma1309",
+          "https://www.linkedin.com/in/ashutoshsharma1309/",
+          "https://leetcode.com/u/agh0r/",
+          "https://codeforces.com/profile/agh0r"
+        ]
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,7 +74,21 @@
     />
   </head>
   <body class="bg-black text-white">
-    <div id="root"></div>
+    <div id="root">
+      <!-- No-JS / pre-hydration fallback so crawlers and JS-disabled visitors
+           still get the core identity and links. Replaced once React mounts. -->
+      <noscript>
+        <main style="max-width: 640px; margin: 4rem auto; padding: 0 1.5rem; font-family: system-ui, sans-serif; color: #fff;">
+          <h1 style="color: #f4b942;">Ashutosh Sharma</h1>
+          <p>Software &amp; Machine Learning Engineer. This interactive portfolio needs JavaScript enabled.</p>
+          <ul>
+            <li><a style="color:#f4b942" href="https://github.com/ashutoshsharma1309">GitHub</a></li>
+            <li><a style="color:#f4b942" href="https://www.linkedin.com/in/ashutoshsharma1309/">LinkedIn</a></li>
+            <li><a style="color:#f4b942" href="mailto:ashutoshsharma1395@gmail.com">Email</a></li>
+          </ul>
+        </main>
+      </noscript>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -7,7 +7,4 @@ export const SOCIAL_LINKS = {
 
 export const CONTACT_EMAIL = "ashutoshsharma1395@gmail.com";
 
-// GitHub handle used for live data fetches (REST API + contributions).
-export const GITHUB_USERNAME = "ashutoshsharma1309";
-
 export type SocialKey = keyof typeof SOCIAL_LINKS;

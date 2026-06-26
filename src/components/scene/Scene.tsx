@@ -5,14 +5,19 @@ import { Lighting } from "./Lighting";
 import { Room } from "./Room";
 import { CameraRig } from "./CameraRig";
 import { useDeviceTier } from "../../hooks/useDeviceTier";
+import { useSceneStore } from "../../store/useSceneStore";
 
 export function Scene() {
   const tier = useDeviceTier();
+  const setSceneStatus = useSceneStore((s) => s.setSceneStatus);
   const dpr: [number, number] =
     tier === "mobile" ? [1, 1.5] : tier === "tablet" ? [1, 2] : [1.25, 2.5];
 
   return (
     <Canvas
+      // Signal the app shell once the WebGL context + scene graph exist so the
+      // loading screen waits for a real frame rather than a fixed timer.
+      onCreated={() => setSceneStatus("ready")}
       shadows={{ type: PCFSoftShadowMap }}
       dpr={dpr}
       camera={{

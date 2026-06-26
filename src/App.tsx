@@ -8,7 +8,9 @@ import { PowerliftingPanel } from "./components/ui/PowerliftingPanel";
 import { WhiteboardPanel } from "./components/ui/WhiteboardPanel";
 import { LoadingScreen } from "./components/ui/LoadingScreen";
 import { TrophyPanel } from "./components/ui/TrophyPanel";
-import { trophies } from "./config/content";
+import { SceneFallback } from "./components/ui/SceneFallback";
+import { SceneErrorBoundary } from "./components/SceneErrorBoundary";
+import { trophies, BIO } from "./config/content";
 import { useSceneStore } from "./store/useSceneStore";
 import { useDeviceTier } from "./hooks/useDeviceTier";
 
@@ -21,36 +23,54 @@ const Scene = lazy(() =>
 
 export default function App() {
   const active = useSceneStore((s) => s.activeHotspot);
+  const sceneStatus = useSceneStore((s) => s.sceneStatus);
   const tier = useDeviceTier();
 
-  // Keep the loading screen up for at least 600ms so users on fast
-  // connections still see the brand frame instead of a flicker.
+  // Keep the loading screen up for at least 600ms (so the brand frame doesn't
+  // flicker) AND until the 3D scene reports a real first frame. A hard 8s cap
+  // guarantees the loader never traps the user if the scene stalls.
   const [minimumDelayPassed, setMinimumDelayPassed] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
   useEffect(() => {
     const t = setTimeout(() => setMinimumDelayPassed(true), 600);
-    return () => clearTimeout(t);
+    const cap = setTimeout(() => setTimedOut(true), 8000);
+    return () => {
+      clearTimeout(t);
+      clearTimeout(cap);
+    };
   }, []);
+
+  const sceneSettled = sceneStatus !== "loading" || timedOut;
+  const showLoading = !(minimumDelayPassed && sceneSettled);
+  const sceneFailed = sceneStatus === "error";
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-[#05080f]">
+      {/* The page's accessible heading. The visible "content" is a 3D canvas,
+          so this gives screen readers and crawlers a real document title. */}
+      <h1 className="sr-only">
+        {BIO.name} — {BIO.title}
+      </h1>
+
       {/* 3D scene fills the viewport — own stacking context so drei <Html>
           overlays can never escape above the UI panels (which are z-20). On
           mobile, when a panel is open the scene is hidden entirely (the
-          full-screen modal covers it) so we hide it from rendering too. */}
+          full-screen modal covers it) so we don't pay rendering cost for a
+          covered scene. */}
       <div
         className="absolute inset-0 canvas-wrapper"
         style={{
           zIndex: 1,
           isolation: "isolate",
-          // On mobile, fully hide the 3D layer when a panel is open so we
-          // don't pay rendering cost for a covered scene.
           visibility:
             tier === "mobile" && active !== "default" ? "hidden" : "visible",
         }}
       >
-        <Suspense fallback={null}>
-          <Scene />
-        </Suspense>
+        <SceneErrorBoundary fallback={<SceneFallback />}>
+          <Suspense fallback={null}>
+            <Scene />
+          </Suspense>
+        </SceneErrorBoundary>
       </div>
 
       {/* UI overlay */}
@@ -70,17 +90,17 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Helpful hint when in default view (desktop only) */}
-      {active === "default" && tier === "desktop" && (
+      {/* Helpful hint when in default view (desktop only, working 3D scene) */}
+      {active === "default" && tier === "desktop" && !sceneFailed && (
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-gold/70 text-xs uppercase tracking-widest font-display pointer-events-none">
           click an object · or use the nav above
         </div>
       )}
 
-      {/* Loading screen — auto-dismisses once the scene chunk has resolved
-          and the minimum delay has elapsed. */}
+      {/* Loading screen — dismisses once the scene reports ready (or times out)
+          and the minimum brand delay has elapsed. */}
       <AnimatePresence>
-        {!minimumDelayPassed && <LoadingScreen key="loading" />}
+        {showLoading && <LoadingScreen key="loading" />}
       </AnimatePresence>
     </div>
   );
