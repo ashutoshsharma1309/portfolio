@@ -4,6 +4,7 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import type { Group } from "three";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 interface PotProps {
   position: [number, number, number];
@@ -13,8 +14,9 @@ interface PotProps {
 
 export function SwayingFoliage({ phase }: { phase: number }) {
   const ref = useRef<Group>(null);
+  const reducedMotion = usePrefersReducedMotion();
   useFrame((state) => {
-    if (!ref.current) return;
+    if (!ref.current || reducedMotion) return;
     const t = state.clock.getElapsedTime();
     ref.current.rotation.x = Math.sin(t * 0.8 + phase) * 0.04;
     ref.current.rotation.z = Math.cos(t * 0.6 + phase) * 0.03;

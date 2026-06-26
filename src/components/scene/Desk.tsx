@@ -2,13 +2,14 @@
 // Two monitors on top, keyboard, mouse, mug, notebook stack.
 // Clicking anywhere on the desk opens the About panel.
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
 import type { Mesh, MeshStandardMaterial } from "three";
 import { useHotspotHover } from "../../hooks/useHotspotHover";
 import { useSceneStore } from "../../store/useSceneStore";
 import { useDeviceTier } from "../../hooks/useDeviceTier";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 const BLACK = "#1a1a1a";
 const DARK = "#2a2a2a";
@@ -211,6 +212,7 @@ function Monitor({ position, screen, rotateY, hovered = false }: MonitorProps) {
 function TerminalContent() {
   const cursorRef = useRef<Mesh>(null);
   const [typed, setTyped] = useState("");
+  const reducedMotion = usePrefersReducedMotion();
   const stateRef = useRef({
     snippet: 0,
     charIdx: 0,
@@ -218,7 +220,16 @@ function TerminalContent() {
     pausingUntil: 0,
   });
 
+  // Reduced motion: show a complete static line instead of the typewriter.
+  useEffect(() => {
+    if (reducedMotion) setTyped(TYPEWRITER_SNIPPETS[0]);
+  }, [reducedMotion]);
+
   useFrame((state) => {
+    if (reducedMotion) {
+      if (cursorRef.current) cursorRef.current.visible = true;
+      return;
+    }
     const t = state.clock.getElapsedTime();
 
     // Cursor blink — toggle visibility every 0.5s.
@@ -311,9 +322,14 @@ const STEAM_LIFETIME = 3.0;
 function SteamParticle({ phase, wobble }: { phase: number; wobble: number }) {
   const ref = useRef<Mesh>(null);
   const matRef = useRef<MeshStandardMaterial>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   useFrame((state) => {
     if (!ref.current || !matRef.current) return;
+    if (reducedMotion) {
+      matRef.current.opacity = 0; // hide drifting steam for reduced motion
+      return;
+    }
     const t = state.clock.getElapsedTime() + phase;
     const tau = (t % STEAM_LIFETIME) / STEAM_LIFETIME; // 0 → 1 over lifetime
     // Vertical drift ~0.6 units total over lifetime (0.2 u/s × 3s).

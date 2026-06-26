@@ -4,6 +4,7 @@ import { Color } from "three";
 import type { DirectionalLight } from "three";
 import { Environment, ContactShadows } from "@react-three/drei";
 import { useDeviceTier } from "../../hooks/useDeviceTier";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 const WARM = new Color("#fff5e0");
 const COOL = new Color("#e8f0ff");
@@ -13,11 +14,12 @@ const tmpColor = new Color();
 export function Lighting() {
   const sunRef = useRef<DirectionalLight>(null);
   const tier = useDeviceTier();
+  const reducedMotion = usePrefersReducedMotion();
   const shadowMapSize = tier === "mobile" ? 1024 : 2048;
   const contactShadowRes = tier === "mobile" ? 256 : 512;
 
   useFrame((state) => {
-    if (!sunRef.current) return;
+    if (!sunRef.current || reducedMotion) return;
     const t = state.clock.getElapsedTime();
     // Period ≈ 12 seconds.
     const k = 0.5 + 0.5 * Math.sin((t / 12) * Math.PI * 2);

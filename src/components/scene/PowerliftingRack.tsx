@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import type { Group, MeshStandardMaterial } from "three";
 import { useSceneStore } from "../../store/useSceneStore";
 import { useHotspotHover } from "../../hooks/useHotspotHover";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 const POST = "#0e0e0e";
 const ACCENT = "#c8221a";
@@ -106,8 +107,13 @@ export function PowerliftingRack() {
 function RotatingDisc() {
   const ref = useRef<Group>(null);
   const rimMatRef = useRef<MeshStandardMaterial>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   useFrame((state) => {
+    if (reducedMotion) {
+      if (rimMatRef.current) rimMatRef.current.emissiveIntensity = 1.0;
+      return;
+    }
     const t = state.clock.getElapsedTime();
     if (ref.current) {
       ref.current.rotation.y = t * 0.25;

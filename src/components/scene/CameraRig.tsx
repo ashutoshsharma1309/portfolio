@@ -4,6 +4,7 @@ import { Vector3 } from "three";
 import { useSceneStore } from "../../store/useSceneStore";
 import { CAMERA_VIEWS_BY_TIER } from "../../config/cameraPositions";
 import { useDeviceTier } from "../../hooks/useDeviceTier";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 function dampVec(current: Vector3, target: Vector3, lambda: number, dt: number) {
   const t = 1 - Math.exp(-lambda * dt);
@@ -30,6 +31,7 @@ export function CameraRig() {
   const camera = useThree((state) => state.camera);
   const active = useSceneStore((s) => s.activeHotspot);
   const tier = useDeviceTier();
+  const reducedMotion = usePrefersReducedMotion();
 
   const desiredPos = useMemo(() => new Vector3(), []);
   const desiredTarget = useMemo(() => new Vector3(), []);
@@ -111,8 +113,14 @@ export function CameraRig() {
       }
     }
 
-    // --- Idle drift: only after entry, only at default, NOT on mobile. ---
-    if (entryDone.current && active === "default" && tier !== "mobile") {
+    // --- Idle drift: only after entry, only at default, NOT on mobile, and
+    // never when the user has asked to reduce motion. ---
+    if (
+      entryDone.current &&
+      active === "default" &&
+      tier !== "mobile" &&
+      !reducedMotion
+    ) {
       const base = tierViews.default;
       const dx =
         Math.sin((elapsed / DRIFT_X_PERIOD) * Math.PI * 2) * DRIFT_X_AMP;

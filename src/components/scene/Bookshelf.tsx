@@ -3,14 +3,16 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import type { Group } from "three";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 const SHELF_COLOR = "#3a2a1a";
 
 function ShelfPlantFoliage() {
   const ref = useRef<Group>(null);
+  const reducedMotion = usePrefersReducedMotion();
   // Distinct phase from the floor plants.
   useFrame((state) => {
-    if (!ref.current) return;
+    if (!ref.current || reducedMotion) return;
     const t = state.clock.getElapsedTime();
     ref.current.rotation.x = Math.sin(t * 0.8 + 4.3) * 0.04;
     ref.current.rotation.z = Math.cos(t * 0.6 + 4.3) * 0.03;
