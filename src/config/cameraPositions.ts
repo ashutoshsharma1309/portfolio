@@ -41,9 +41,9 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 32,
     },
     rack: {
-      position: [1.5, 3.5, 4.5],
-      target: [3.5, 1.6, -1.5],
-      fov: 36,
+      position: [7.6, 3.6, 7.2],
+      target: [3.4, 1.2, 2.3],
+      fov: 34,
     },
     whiteboard: {
       position: [3.5, 3.2, 3],
@@ -76,9 +76,11 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 40,
     },
     rack: {
-      position: [1.5, 3.8, 6.0],
-      target: [3.5, 1.6, -1.5],
-      fov: 42,
+      // Tablet shows a 60vw side panel, so the rack must sit in the visible
+      // left ~40%. Bias the target right/front of the rack to push it left.
+      position: [8.0, 4.2, 8.6],
+      target: [6.2, 1.5, 4.4],
+      fov: 46,
     },
     whiteboard: {
       position: [3.5, 3.6, 5.0],
@@ -114,9 +116,9 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 50,
     },
     rack: {
-      position: [0.5, 4.0, 6.0],
-      target: [3.5, 1.6, -1.5],
-      fov: 54,
+      position: [8.6, 4.4, 8.4],
+      target: [3.4, 1.3, 2.3],
+      fov: 48,
     },
     whiteboard: {
       position: [3.5, 4.0, 5.0],

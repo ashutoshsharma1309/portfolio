@@ -395,9 +395,9 @@ export interface PR {
 export const BODYWEIGHT_KG = 85;
 
 export const POWERLIFTING_PRS: PR[] = [
-  { lift: "Squat", weight: "180", unit: "kg" },
-  { lift: "Bench Press", weight: "135", unit: "kg" },
-  { lift: "Deadlift", weight: "215", unit: "kg" },
+  { lift: "Squat", weight: "190", unit: "kg" },
+  { lift: "Bench Press", weight: "140", unit: "kg" },
+  { lift: "Deadlift", weight: "220", unit: "kg" },
 ];
 
 // Bodyweight is the weight-class context for the PRs above. The per-lift
