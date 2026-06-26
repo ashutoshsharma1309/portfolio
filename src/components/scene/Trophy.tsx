@@ -19,6 +19,7 @@ import type { Group, MeshStandardMaterial } from "three";
 import { useHotspotHover } from "../../hooks/useHotspotHover";
 import { useSceneStore } from "../../store/useSceneStore";
 import { useDeviceTier } from "../../hooks/useDeviceTier";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 import type { HotspotKey } from "../../config/cameraPositions";
 
 interface TrophyProps {
@@ -60,6 +61,7 @@ export function Trophy({
   const setHotspot = useSceneStore((s) => s.setHotspot);
   const { hovered, onPointerOver, onPointerOut } = useHotspotHover(hotspot);
   const tier = useDeviceTier();
+  const reducedMotion = usePrefersReducedMotion();
 
   const bobRef = useRef<Group>(null);
   const ringMatRef = useRef<MeshStandardMaterial>(null);
@@ -79,8 +81,14 @@ export function Trophy({
     lightTarget.position.set(0, 0.5, 0);
   }, [lightTarget]);
 
-  // Per-frame: vertical bob (faster on hover) + ring emissive pulse.
+  // Per-frame: vertical bob (faster on hover) + ring emissive pulse. Frozen to
+  // a static pose when the user prefers reduced motion.
   useFrame((state) => {
+    if (reducedMotion) {
+      if (bobRef.current) bobRef.current.position.y = 0.04;
+      if (ringMatRef.current) ringMatRef.current.emissiveIntensity = 1.2;
+      return;
+    }
     const t = state.clock.getElapsedTime();
     if (bobRef.current) {
       const speed = hovered ? 2.4 : 1.2;

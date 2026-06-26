@@ -4,15 +4,17 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import type { Group } from "three";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
 const DARK = "#222";
 const INITIAL_Y = -0.4;
 
 export function Chair() {
   const groupRef = useRef<Group>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   useFrame((state) => {
-    if (!groupRef.current) return;
+    if (!groupRef.current || reducedMotion) return;
     groupRef.current.rotation.y =
       INITIAL_Y + state.clock.getElapsedTime() * 0.15;
   });

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Ashutosh Sharma — SWE & ML Engineer">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Ashutosh Sharma — AI &amp; Backend Engineer">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#0a1628"/>
@@ -17,13 +17,13 @@
   </g>
   <text x="90" y="250" font-family="'Russo One','Bebas Neue',sans-serif" font-size="40" letter-spacing="14" fill="#f4b942" fill-opacity="0.8">PORTFOLIO</text>
   <text x="86" y="360" font-family="'Russo One','Bebas Neue',sans-serif" font-size="92" letter-spacing="2" fill="#ffffff">Ashutosh Sharma</text>
-  <text x="90" y="430" font-family="system-ui,sans-serif" font-size="36" fill="#ffffff" fill-opacity="0.7">SWE &amp; ML Engineer</text>
+  <text x="90" y="430" font-family="system-ui,sans-serif" font-size="36" fill="#ffffff" fill-opacity="0.7">AI &amp; Backend Engineer</text>
   <g font-family="system-ui,sans-serif" font-size="24" fill="#f4b942" fill-opacity="0.9">
-    <rect x="90" y="476" width="220" height="48" rx="24" fill="#f4b942" fill-opacity="0.08" stroke="#f4b942" stroke-opacity="0.3"/>
-    <text x="120" y="506">Full-Stack</text>
-    <rect x="330" y="476" width="250" height="48" rx="24" fill="#f4b942" fill-opacity="0.08" stroke="#f4b942" stroke-opacity="0.3"/>
-    <text x="360" y="506">Machine Learning</text>
-    <rect x="600" y="476" width="290" height="48" rx="24" fill="#f4b942" fill-opacity="0.08" stroke="#f4b942" stroke-opacity="0.3"/>
-    <text x="630" y="506">Competitive Programming</text>
+    <rect x="90" y="476" width="240" height="48" rx="24" fill="#f4b942" fill-opacity="0.08" stroke="#f4b942" stroke-opacity="0.3"/>
+    <text x="120" y="506">AI Engineering</text>
+    <rect x="350" y="476" width="200" height="48" rx="24" fill="#f4b942" fill-opacity="0.08" stroke="#f4b942" stroke-opacity="0.3"/>
+    <text x="380" y="506">Backend</text>
+    <rect x="570" y="476" width="200" height="48" rx="24" fill="#f4b942" fill-opacity="0.08" stroke="#f4b942" stroke-opacity="0.3"/>
+    <text x="600" y="506">Full-Stack</text>
   </g>
 </svg>

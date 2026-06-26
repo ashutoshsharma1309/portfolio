@@ -4,7 +4,9 @@ import type { DeviceTier } from "../hooks/useDeviceTier";
 export type HotspotKey =
   | "default"
   | "aboutFrames"
+  | "experience"
   | "projectsDesk"
+  | "skills"
   | "rack"
   | "whiteboard"
   | "sportsTrophy"
@@ -24,6 +26,10 @@ export type CameraPositions = Record<DeviceTier, Record<HotspotKey, CameraView>>
 export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
   desktop: {
     default: { position: [10, 9, 10], target: [0, 1.4, 0], fov: 30 },
+    // Nav-only panels (no dedicated 3D object) hold the room-overview framing
+    // so the camera doesn't fly somewhere arbitrary while the panel opens.
+    experience: { position: [10, 9, 10], target: [0, 1.4, 0], fov: 30 },
+    skills: { position: [10, 9, 10], target: [0, 1.4, 0], fov: 30 },
     aboutFrames: {
       position: [-1.5, 3, 4.5],
       target: [-3, 3, -4.9],
@@ -45,8 +51,8 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 34,
     },
     sportsTrophy: {
-      position: [5.5, 1.6, 5.5],
-      target: [4.5, 0.5, 3.8],
+      position: [3.6, 1.6, 5.2],
+      target: [2.6, 0.5, 3.5],
       fov: 28,
     },
     hackathonTrophy: {
@@ -57,6 +63,8 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
   },
   tablet: {
     default: { position: [12, 10, 12], target: [0, 1.4, 0], fov: 38 },
+    experience: { position: [12, 10, 12], target: [0, 1.4, 0], fov: 38 },
+    skills: { position: [12, 10, 12], target: [0, 1.4, 0], fov: 38 },
     aboutFrames: {
       position: [-1.0, 3, 5.5],
       target: [-3, 3, -4.9],
@@ -78,8 +86,8 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 42,
     },
     sportsTrophy: {
-      position: [6.0, 1.8, 6.0],
-      target: [4.5, 0.5, 3.8],
+      position: [4.1, 1.8, 5.7],
+      target: [2.6, 0.5, 3.5],
       fov: 35,
     },
     hackathonTrophy: {
@@ -93,6 +101,8 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
     // see the whole room. Hotspot zooms frame slightly tighter on mobile so
     // the subject fills the screen.
     default: { position: [13, 11, 13], target: [0, 1.4, 0], fov: 52 },
+    experience: { position: [13, 11, 13], target: [0, 1.4, 0], fov: 52 },
+    skills: { position: [13, 11, 13], target: [0, 1.4, 0], fov: 52 },
     aboutFrames: {
       position: [-0.3, 3, 5.0],
       target: [-3, 3, -4.9],
@@ -114,8 +124,8 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 54,
     },
     sportsTrophy: {
-      position: [5.8, 1.6, 5.8],
-      target: [4.5, 0.5, 3.8],
+      position: [3.9, 1.6, 5.5],
+      target: [2.6, 0.5, 3.5],
       fov: 42,
     },
     hackathonTrophy: {
@@ -126,6 +136,3 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
   },
 };
 
-// Backwards-compatible default export — desktop preset used by anything that
-// doesn't yet plumb the tier through.
-export const CAMERA_VIEWS = CAMERA_VIEWS_BY_TIER.desktop;

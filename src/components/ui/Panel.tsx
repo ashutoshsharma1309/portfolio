@@ -10,6 +10,9 @@ interface PanelProps {
   /** Optional Tailwind class added to the inner scroll container (e.g. for
    *  panel-specific scrollbar theming). */
   scrollClassName?: string;
+  /** Optional decorative node rendered beside the heading (e.g. a glowing
+   *  trophy for the Achievements panel). */
+  headerIcon?: ReactNode;
 }
 
 const FOCUSABLE =
@@ -23,7 +26,12 @@ const FOCUSABLE =
 //   desktop  — slide in from the right, ~480px wide
 //   tablet   — slide in from the right, ~60vw wide
 //   mobile   — slide up from the bottom, full-screen modal with a clear close
-export function Panel({ title, children, scrollClassName = "" }: PanelProps) {
+export function Panel({
+  title,
+  children,
+  scrollClassName = "",
+  headerIcon,
+}: PanelProps) {
   const tier = useDeviceTier();
   const reduced = usePrefersReducedMotion();
   const reset = useSceneStore((s) => s.resetToDefault);
@@ -112,12 +120,15 @@ export function Panel({ title, children, scrollClassName = "" }: PanelProps) {
           <span className="block h-1 w-10 rounded-full bg-gold/40" />
         </div>
         <div className="flex items-center justify-between border-b border-gold/10 px-6 pt-4 pb-2">
-          <h2
-            id={headingId}
-            className="font-display text-2xl tracking-wider text-gold"
-          >
-            {title}
-          </h2>
+          <div className="flex items-center gap-2.5">
+            {headerIcon}
+            <h2
+              id={headingId}
+              className="font-display text-2xl tracking-wider text-gold"
+            >
+              {title}
+            </h2>
+          </div>
           <button
             onClick={reset}
             aria-label="Close panel"
@@ -164,12 +175,15 @@ export function Panel({ title, children, scrollClassName = "" }: PanelProps) {
       className={`fixed top-0 right-0 bottom-0 ${widthClass} z-20 flex max-w-full flex-col border-l border-gold/20 bg-navy/95 outline-none backdrop-blur-md`}
     >
       <div className="flex items-start justify-between px-8 pt-24 pb-2">
-        <h2
-          id={headingId}
-          className="font-display text-3xl tracking-wider text-gold"
-        >
-          {title}
-        </h2>
+        <div className="flex items-center gap-3">
+          {headerIcon}
+          <h2
+            id={headingId}
+            className="font-display text-3xl tracking-wider text-gold"
+          >
+            {title}
+          </h2>
+        </div>
         <button
           onClick={reset}
           aria-label="Close panel"

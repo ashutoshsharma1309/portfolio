@@ -4,10 +4,12 @@ import type { HotspotKey } from "../../config/cameraPositions";
 
 const ENTRIES: { key: HotspotKey; label: string; hint: string }[] = [
   { key: "aboutFrames", label: "About Me", hint: "Background & what I do" },
-  { key: "projectsDesk", label: "Projects", hint: "Selected work & case studies" },
-  { key: "rack", label: "Powerlifting", hint: "Personal records" },
+  { key: "experience", label: "Experience", hint: "Technical & leadership roles" },
   { key: "sportsTrophy", label: "Sports", hint: "Athletics achievements" },
-  { key: "hackathonTrophy", label: "Hackathons", hint: "Tech wins" },
+  { key: "projectsDesk", label: "Projects", hint: "Flagship work & case studies" },
+  { key: "skills", label: "Skills", hint: "Languages, AI/ML & infra" },
+  { key: "hackathonTrophy", label: "Achievements", hint: "Hackathon wins & LeetCode" },
+  { key: "rack", label: "Powerlifting", hint: "Personal records" },
   { key: "whiteboard", label: "Contact", hint: "Get in touch" },
 ];
 
@@ -48,7 +50,7 @@ export function SceneFallback() {
           ))}
         </div>
 
-        <p className="mt-8 text-xs text-white/40">
+        <p className="mt-8 text-xs text-white/55">
           Your browser couldn&apos;t render the interactive 3D room, so
           here&apos;s the fast version. Everything is still here.
         </p>

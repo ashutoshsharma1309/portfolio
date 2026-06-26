@@ -3,7 +3,9 @@ import { AnimatePresence } from "framer-motion";
 import { TopNav } from "./components/nav/TopNav";
 import { BackButton } from "./components/ui/BackButton";
 import { AboutPanel } from "./components/ui/AboutPanel";
+import { ExperiencePanel } from "./components/ui/ExperiencePanel";
 import { ProjectsPanel } from "./components/ui/ProjectsPanel";
+import { SkillsPanel } from "./components/ui/SkillsPanel";
 import { PowerliftingPanel } from "./components/ui/PowerliftingPanel";
 import { WhiteboardPanel } from "./components/ui/WhiteboardPanel";
 import { LoadingScreen } from "./components/ui/LoadingScreen";
@@ -79,7 +81,9 @@ export default function App() {
 
       <AnimatePresence mode="wait">
         {active === "aboutFrames" && <AboutPanel key="about" />}
+        {active === "experience" && <ExperiencePanel key="experience" />}
         {active === "projectsDesk" && <ProjectsPanel key="projects" />}
+        {active === "skills" && <SkillsPanel key="skills" />}
         {active === "rack" && <PowerliftingPanel key="powerlifting" />}
         {active === "whiteboard" && <WhiteboardPanel key="whiteboard" />}
         {active === "sportsTrophy" && (

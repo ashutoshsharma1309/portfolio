@@ -6,6 +6,7 @@ import {
   type ProjectStatus,
 } from "../../config/content";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
+import { Icon } from "./Icon";
 import { Panel } from "./Panel";
 
 const STATUS_META: Record<
@@ -83,9 +84,10 @@ function ExternalLink({ href, label }: { href: string; label: string }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-1.5 rounded-md border border-gold/30 px-3 py-1.5 text-xs font-medium text-gold transition-colors hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
+      className="inline-flex min-h-[36px] items-center gap-1.5 rounded-md border border-gold/30 px-3 py-1.5 text-xs font-medium text-gold transition-colors hover:bg-gold/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
     >
       {label}
+      <span className="sr-only"> (opens in new tab)</span>
       <svg
         width="12"
         height="12"
@@ -121,11 +123,18 @@ function ProjectCard({
       initial={reduced ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: reduced ? 0 : 0.05 * index, duration: 0.4 }}
-      className="group relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-gold/30"
+      className={`group relative overflow-hidden rounded-xl bg-white/[0.03] p-5 transition-colors ${
+        project.flagship
+          ? "border border-gold/40 hover:border-gold/60"
+          : "border border-white/10 hover:border-gold/30"
+      }`}
     >
-      {/* Accent glow that follows the project color on hover */}
+      {/* Accent glow: always-on (low) for the flagship card, hover-only for the
+          rest, so the single best project reads as distinct at a glance. */}
       <div
-        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        className={`pointer-events-none absolute -inset-px transition-opacity duration-500 ${
+          project.flagship ? "opacity-60 group-hover:opacity-100" : "opacity-0 group-hover:opacity-100"
+        }`}
         style={{
           background: `radial-gradient(420px circle at 100% 0%, ${project.accent[0]}22, transparent 60%)`,
         }}
@@ -141,20 +150,27 @@ function ProjectCard({
           </h4>
           <p className="mt-0.5 text-sm text-gold/80">{project.tagline}</p>
         </div>
-        {project.featured && (
-          <span className="shrink-0 rounded-full border border-gold/40 bg-gold/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-gold">
-            Featured
+        {project.flagship ? (
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-gold/50 bg-gold/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-gold">
+            <Icon name="sparkles" size={11} />
+            Flagship
           </span>
+        ) : (
+          project.featured && (
+            <span className="shrink-0 rounded-full border border-gold/40 bg-gold/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-gold">
+              Featured
+            </span>
+          )
         )}
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <StatusPill status={project.status} />
         {project.timeline && (
-          <span className="text-xs text-white/45">{project.timeline}</span>
+          <span className="text-xs text-white/55">{project.timeline}</span>
         )}
         {project.tags?.map((tag) => (
-          <span key={tag} className="text-xs text-white/45">
+          <span key={tag} className="text-xs text-white/55">
             · {tag}
           </span>
         ))}
@@ -292,8 +308,8 @@ export function ProjectsPanel() {
     >
       <p className="mb-6 text-sm leading-relaxed text-white/60">
         A curated selection of things I&apos;ve designed, built, and shipped —
-        from on-chain ticketing to on-device ML. Expand any card for the full
-        case study.
+        from an AI code-review platform to a full-stack placement system. Expand
+        any card for the full case study.
       </p>
 
       {featured.length > 0 && (

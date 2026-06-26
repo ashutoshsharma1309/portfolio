@@ -14,7 +14,11 @@ export function useDeviceTier(): DeviceTier {
   const [tier, setTier] = useState<DeviceTier>(getTier);
 
   useEffect(() => {
-    const handler = () => setTier(getTier());
+    // Only update when the bucket actually changes — resize/orientation fire
+    // continuously during a drag, but the tier changes at most a couple of
+    // times. Bailing on an unchanged tier avoids a render storm across the many
+    // components that consume this hook.
+    const handler = () => setTier((prev) => (getTier() === prev ? prev : getTier()));
     window.addEventListener("resize", handler);
     window.addEventListener("orientationchange", handler);
     return () => {

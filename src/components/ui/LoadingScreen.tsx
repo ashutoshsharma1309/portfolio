@@ -40,7 +40,7 @@ export function LoadingScreen() {
           />
         ))}
       </div>
-      <div className="mt-6 text-xs uppercase tracking-widest text-gold/60">
+      <div className="mt-6 text-xs uppercase tracking-widest text-gold/80">
         Loading the room…
       </div>
     </motion.div>
