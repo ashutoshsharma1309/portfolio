@@ -56,9 +56,11 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 28,
     },
     hackathonTrophy: {
-      position: [1.5, 3.2, 2.5],
-      target: [0.5, 2.8, -1.5],
-      fov: 28,
+      // Frame the silver cup on the bookshelf at [2.85, 3.03, -4.78] (cup rim
+      // ~y=4), NOT the social photo frames on the left of the back wall.
+      position: [3.4, 3.7, -1.6],
+      target: [2.85, 3.45, -4.78],
+      fov: 30,
     },
   },
   tablet: {
@@ -93,9 +95,11 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 35,
     },
     hackathonTrophy: {
-      position: [1.8, 3.4, 3],
-      target: [0.5, 2.8, -1.5],
-      fov: 35,
+      // 60vw side panel — look slightly to the RIGHT of the trophy so the cup
+      // sits ~1/3 from the left, inside the visible strip (not under the panel).
+      position: [3.9, 3.8, -1.3],
+      target: [3.7, 3.4, -4.78],
+      fov: 42,
     },
   },
   mobile: {
@@ -131,9 +135,9 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 42,
     },
     hackathonTrophy: {
-      position: [1.5, 3.2, 2.5],
-      target: [0.5, 2.8, -1.5],
-      fov: 42,
+      position: [3.4, 3.7, -1.5],
+      target: [2.85, 3.45, -4.78],
+      fov: 40,
     },
   },
 };
