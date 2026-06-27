@@ -81,3 +81,12 @@ pnpm install
 pnpm dev
 ```
 Then open the printed URL (default **http://localhost:5173**).
+
+## 📜 Scripts
+
+| Command | Description |
+| --- | --- |
+| `pnpm dev` | Start the Vite dev server with hot-module reload |
+| `pnpm build` | Type-check, then build for production into `dist/` |
+| `pnpm preview` | Serve the production build locally |
+| `pnpm typecheck` | Run the TypeScript compiler with no emit |
