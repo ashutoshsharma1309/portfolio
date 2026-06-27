@@ -222,4 +222,10 @@ republish them as your own portfolio.
 
 ---
 
-<p align="center"><em>Built with React, three.js, and a lot of coffee. ☕</em></p>
+<p align="center">
+  If this portfolio gave you an idea or two, consider leaving a ⭐ — it helps!
+</p>
+<p align="center">
+  <em>Built with React, three.js, and a lot of coffee. ☕</em>
+</p>
+<p align="center"><a href="#ashutosh-sharma--portfolio">↑ Back to top</a></p>
