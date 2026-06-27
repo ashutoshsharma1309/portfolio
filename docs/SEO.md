@@ -23,9 +23,14 @@ and `sameAs` social profiles — helping search engines build a rich profile.
 - A `<noscript>` block exposes the name, role, and key links without JavaScript.
 - A visually-hidden `<h1>` gives the page a real, crawlable heading.
 
+## Crawl & install files
+- `public/robots.txt` — allows all crawlers and points to the sitemap.
+- `public/sitemap.xml` — single-page entry (update the host once the domain is set).
+- `public/manifest.webmanifest` — installable PWA metadata (name, theme, icon).
+
 ## To do (needs the deploy domain)
 - [ ] `<link rel="canonical">` and `og:url` with the absolute production URL
-- [ ] `robots.txt` and `sitemap.xml`
+- [ ] Absolute `<loc>` host in `sitemap.xml` and `robots.txt`
 
 ## Verify
 Paste the production URL into a card validator (e.g. opengraph.xyz) and run
