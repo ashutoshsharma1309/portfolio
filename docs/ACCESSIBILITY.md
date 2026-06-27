@@ -41,3 +41,10 @@ links, plus a `<noscript>` block with the core identity and contact links.
 - [ ] `Esc` closes panels and the mobile menu
 - [ ] Enable "reduce motion" — no looping animation anywhere
 - [ ] Disable WebGL — the static fallback is fully usable
+
+## Tools
+- **Lighthouse** (Chrome DevTools) — Accessibility audit.
+- **axe DevTools** — automated WCAG checks.
+- **Keyboard only** — unplug the mouse and navigate the whole site.
+- **VoiceOver / NVDA** — verify the screen-reader heading and labels read sensibly.
+- OS setting: **Reduce Motion** (macOS: Accessibility → Display) to verify gating.
