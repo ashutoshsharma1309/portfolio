@@ -1,0 +1,10 @@
+/* TEAM */
+  Developer: Ashutosh Sharma
+  Role: AI & Backend Engineer
+  GitHub: @ashutoshsharma1309
+  LinkedIn: ashutoshsharma1309
+
+/* SITE */
+  Standards: HTML5, CSS3, TypeScript
+  Components: React, three.js, react-three-fiber, Framer Motion, Tailwind CSS
+  Software: Vite, pnpm
