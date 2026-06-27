@@ -20,6 +20,22 @@ can explore — every object opens a real section of the site.
 
 > **Live demo:** _add your Vercel URL here_
 
+## 📑 Table of Contents
+
+- [Why a 3D room?](#-why-a-3d-room)
+- [Highlights](#-highlights)
+- [Tech Stack](#%EF%B8%8F-tech-stack)
+- [Explore the Room](#-explore-the-room)
+- [Controls](#-controls)
+- [Getting Started](#-getting-started)
+- [Scripts](#-scripts)
+- [Project Structure](#-project-structure)
+- [Accessibility, Performance & SEO](#-accessibility-performance--seo)
+- [Deployment](#%EF%B8%8F-deployment)
+- [Documentation](#-documentation)
+- [Author](#-author)
+- [License](#-license)
+
 ## ✨ Highlights
 
 - **Interactive 3D room** — built with react-three-fiber, drei, and three.js. Click objects or use the nav; the camera smoothly flies to each focus point.
