@@ -133,6 +133,10 @@ Then open the printed URL (default **http://localhost:5173**).
 | `pnpm preview` | Serve the production build locally |
 | `pnpm typecheck` | Run the TypeScript compiler with no emit |
 
+Every push and pull request to `main` runs **CI** (`.github/workflows/ci.yml`):
+a frozen-lockfile install, `pnpm typecheck`, and `pnpm build`. Editor config,
+Prettier, and recommended extensions keep formatting consistent across machines.
+
 ## 📁 Project Structure
 
 ```
