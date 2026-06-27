@@ -25,6 +25,16 @@ host or CDN.
 Every push to `main` triggers a production deploy; pull requests get preview
 deploys automatically.
 
+## vercel.json
+
+[`vercel.json`](../vercel.json) configures, without overriding Vite auto-detection:
+
+- **SPA rewrite** — extension-less paths fall back to `index.html`.
+- **Security headers** — `X-Content-Type-Options`, `X-Frame-Options`,
+  `Referrer-Policy`, and a restrictive `Permissions-Policy`.
+- **Immutable caching** — content-hashed files under `/assets/*` are cached for
+  one year.
+
 ## Deploying elsewhere
 
 Any static host works — upload the contents of `dist/`. For client-side apps,
