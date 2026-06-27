@@ -30,3 +30,16 @@ can explore — every object opens a real section of the site.
 - **Animated, intentional** — scroll-reveal sections, count-up stats, and per-device camera presets, all motion-safe.
 - **Production SEO** — JSON-LD `Person` schema, Open Graph / Twitter cards, a PNG social preview, and a `<noscript>` fallback.
 - **Fast** — the heavy 3D bundle is code-split and lazy-loaded; vendor chunks cache independently; DPR and effects scale down on mobile.
+
+## 🛠️ Tech Stack
+
+| Area | Tools |
+| --- | --- |
+| **Framework** | React 18, TypeScript |
+| **Build** | Vite 5 |
+| **3D / graphics** | three.js, @react-three/fiber, @react-three/drei, @react-spring/three |
+| **Animation** | Framer Motion |
+| **State** | Zustand |
+| **Styling** | Tailwind CSS |
+| **Tooling** | TypeScript (strict mode), pnpm |
+| **Hosting** | Vercel |
