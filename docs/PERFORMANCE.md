@@ -33,6 +33,12 @@ scene scales accordingly:
 - When a panel is open on mobile, the canvas isn't rendered (the full-screen
   panel covers it), so no frames are wasted.
 
+## Caching
+
+Content-hashed build assets under `/assets/*` are served with
+`Cache-Control: public, max-age=31536000, immutable` (via [vercel.json](../vercel.json)),
+so repeat visits re-download only what actually changed.
+
 ## Render hygiene
 
 - Zustand selectors are atomic — components subscribe only to the slice they use.
