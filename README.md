@@ -14,6 +14,11 @@
 ![Three.js](https://img.shields.io/badge/Three.js-r169-000000?logo=three.js&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38BDF8?logo=tailwindcss&logoColor=white)
 
+![Status](https://img.shields.io/badge/status-active-success)
+![Deploys on Vercel](https://img.shields.io/badge/deploys-Vercel-000000?logo=vercel&logoColor=white)
+![PRs welcome](https://img.shields.io/badge/PRs-welcome-f4b942)
+![Accessibility](https://img.shields.io/badge/a11y-prefers--reduced--motion-1e3a5f)
+
 I'm a Computer Science undergraduate and **AI & Backend Engineer**. Instead of a
 conventional scrolling page, this portfolio renders a hand-built 3D workspace you
 can explore — every object opens a real section of the site.
