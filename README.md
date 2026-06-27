@@ -88,6 +88,17 @@ from the top navigation:
 > No hardware acceleration? The site automatically falls back to a fast, fully
 > accessible static version with the exact same content.
 
+## 🎮 Controls
+
+| Input | Action |
+| --- | --- |
+| **Click** an object | Fly the camera to it and open its panel |
+| **Top nav / mobile menu** | Jump to any section |
+| **`Tab` / `Shift`+`Tab`** | Move focus (trapped inside an open panel) |
+| **`Enter` / `Space`** | Activate the focused control |
+| **`Esc`** | Close the open panel or mobile menu |
+| **Logo** | Return to the default room view |
+
 ## 🚀 Getting Started
 
 ### Prerequisites
