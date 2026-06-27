@@ -199,6 +199,16 @@ Project meta: [Contributing](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDU
 - LeetCode — [agh0r](https://leetcode.com/u/agh0r/)
 - Codeforces — [agh0r](https://codeforces.com/profile/agh0r)
 
+## 🙏 Acknowledgements
+
+Built on the shoulders of excellent open source:
+
+- [React Three Fiber](https://github.com/pmndrs/react-three-fiber) & [drei](https://github.com/pmndrs/drei) — the React renderer and helpers for [three.js](https://threejs.org/)
+- [Framer Motion](https://www.framer.com/motion/) — UI animation
+- [Zustand](https://github.com/pmndrs/zustand) — state management
+- [Tailwind CSS](https://tailwindcss.com/) & [Vite](https://vitejs.dev/)
+- Icons are a small hand-built SVG set; badges by [Shields.io](https://shields.io/)
+
 ## 📄 License
 
 This is a personal portfolio. The code is free to reference for learning, but the
