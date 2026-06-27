@@ -90,3 +90,27 @@ Then open the printed URL (default **http://localhost:5173**).
 | `pnpm build` | Type-check, then build for production into `dist/` |
 | `pnpm preview` | Serve the production build locally |
 | `pnpm typecheck` | Run the TypeScript compiler with no emit |
+
+## 📁 Project Structure
+
+```
+src/
+├─ App.tsx                 # App shell: scene, panels, loading, error boundary
+├─ main.tsx                # Entry point
+├─ index.css               # Tailwind layers + global a11y styles
+├─ components/
+│  ├─ nav/                 # TopNav (desktop bar + mobile menu)
+│  ├─ scene/               # 3D room: Room, Scene, CameraRig, Lighting, Desk,
+│  │                       #   Chair, PowerliftingRack, Trophy, Plants, …
+│  ├─ ui/                  # Panels + UI: Panel, *Panel, Icon, Reveal,
+│  │                       #   AnimatedCounter, LoadingScreen, SceneFallback
+│  └─ SceneErrorBoundary.tsx
+├─ config/                 # content.ts (single source of truth), links.ts,
+│                          #   cameraPositions.ts (per-device camera presets)
+├─ hooks/                  # useDeviceTier, usePrefersReducedMotion, useHotspotHover
+└─ store/                  # useSceneStore (Zustand)
+public/                    # favicon.svg, og-image.svg, og-image.png
+```
+
+> **All editable content lives in [`src/config/content.ts`](src/config/content.ts).**
+> Add a project, role, skill, or achievement there and the UI adapts automatically.
