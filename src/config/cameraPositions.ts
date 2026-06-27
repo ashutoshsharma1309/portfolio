@@ -51,9 +51,11 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 34,
     },
     sportsTrophy: {
-      position: [3.6, 1.6, 5.2],
-      target: [2.6, 0.5, 3.5],
-      fov: 28,
+      // Pulled back + wider fov so the whole gold cup (base→rim, ~1.1u tall)
+      // fits with breathing room instead of being cropped.
+      position: [4.8, 2.6, 7.0],
+      target: [2.6, 0.7, 3.5],
+      fov: 30,
     },
     hackathonTrophy: {
       // Frame the silver cup on the bookshelf at [2.85, 3.03, -4.78] (cup rim
@@ -90,9 +92,11 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 42,
     },
     sportsTrophy: {
-      position: [4.1, 1.8, 5.7],
-      target: [2.6, 0.5, 3.5],
-      fov: 35,
+      // Pull back for full visibility; look slightly right of the trophy so it
+      // sits in the visible left ~40% beside the 60vw panel.
+      position: [5.2, 2.7, 7.2],
+      target: [3.6, 0.7, 3.5],
+      fov: 38,
     },
     hackathonTrophy: {
       // 60vw side panel — look slightly to the RIGHT of the trophy so the cup
@@ -130,9 +134,9 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
       fov: 54,
     },
     sportsTrophy: {
-      position: [3.9, 1.6, 5.5],
-      target: [2.6, 0.5, 3.5],
-      fov: 42,
+      position: [4.6, 2.6, 7.2],
+      target: [2.6, 0.7, 3.5],
+      fov: 44,
     },
     hackathonTrophy: {
       position: [3.4, 3.7, -1.5],
