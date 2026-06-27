@@ -1,0 +1,4 @@
+# https://securitytxt.org (RFC 9116)
+Contact: https://github.com/ashutoshsharma1309/portfolio/security/advisories/new
+Preferred-Languages: en
+Canonical: /.well-known/security.txt
