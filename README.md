@@ -114,3 +114,17 @@ public/                    # favicon.svg, og-image.svg, og-image.png
 
 > **All editable content lives in [`src/config/content.ts`](src/config/content.ts).**
 > Add a project, role, skill, or achievement there and the UI adapts automatically.
+
+## ♿ Accessibility, Performance & SEO
+
+**Accessibility**
+- Keyboard-navigable throughout; panels are modal dialogs with focus trap, focus restore, and `Escape` to close.
+- `prefers-reduced-motion` disables every looping animation — camera drift, trophy/disc spin, plant sway, dust motes, count-ups, and panel transitions.
+- Semantic landmarks, an `sr-only` page heading, `aria-current` nav state, decorative icons marked `aria-hidden`, and AA-contrast text.
+
+**Performance**
+- The three.js scene is a lazily-loaded, code-split chunk; React and Framer Motion are split into separately-cached vendor chunks.
+- Device-tier presets scale DPR, shadow resolution, and ambient effects down on mobile; the canvas isn't rendered behind full-screen mobile panels.
+
+**SEO**
+- JSON-LD `Person` structured data, Open Graph + Twitter cards, a 1200×630 PNG preview, descriptive metadata, and a `<noscript>` fallback.
