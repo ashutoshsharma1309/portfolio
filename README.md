@@ -174,6 +174,22 @@ pnpm build        # outputs to dist/
 ```
 Framework preset: **Vite** · Output directory: **`dist`**.
 
+## 📚 Documentation
+
+In-depth docs live in [`docs/`](docs/README.md):
+
+- [Architecture](docs/ARCHITECTURE.md) — scene, panels, state, camera
+- [Editing content](docs/CONTENT.md) — update copy, projects, skills
+- [Accessibility](docs/ACCESSIBILITY.md) — commitments & implementation
+- [Performance](docs/PERFORMANCE.md) — bundle strategy & device tiers
+- [SEO](docs/SEO.md) — metadata, structured data, social cards
+- [Style guide](docs/STYLE.md) — colors, typography, spacing
+- [Deployment](docs/DEPLOYMENT.md) — building & shipping to Vercel
+- [FAQ](docs/FAQ.md)
+
+Project meta: [Contributing](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md) ·
+[Security](SECURITY.md) · [Changelog](CHANGELOG.md) · [Roadmap](ROADMAP.md)
+
 ## 👤 Author
 
 **Ashutosh Sharma** — AI & Backend Engineer
