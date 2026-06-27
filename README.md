@@ -128,3 +128,31 @@ public/                    # favicon.svg, og-image.svg, og-image.png
 
 **SEO**
 - JSON-LD `Person` structured data, Open Graph + Twitter cards, a 1200×630 PNG preview, descriptive metadata, and a `<noscript>` fallback.
+
+## ☁️ Deployment
+
+Deployed on **Vercel**. Every push to `main` triggers a production build:
+```bash
+pnpm install --frozen-lockfile
+pnpm build        # outputs to dist/
+```
+Framework preset: **Vite** · Output directory: **`dist`**.
+
+## 👤 Author
+
+**Ashutosh Sharma** — AI & Backend Engineer
+
+- GitHub — [@ashutoshsharma1309](https://github.com/ashutoshsharma1309)
+- LinkedIn — [ashutoshsharma1309](https://www.linkedin.com/in/ashutoshsharma1309/)
+- LeetCode — [agh0r](https://leetcode.com/u/agh0r/)
+- Codeforces — [agh0r](https://codeforces.com/profile/agh0r)
+
+## 📄 License
+
+This is a personal portfolio. The code is free to reference for learning, but the
+3D room, copy, and personal content are © Ashutosh Sharma — please don't
+republish them as your own portfolio.
+
+---
+
+<p align="center"><em>Built with React, three.js, and a lot of coffee. ☕</em></p>
