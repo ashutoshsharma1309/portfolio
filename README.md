@@ -43,3 +43,22 @@ can explore — every object opens a real section of the site.
 | **Styling** | Tailwind CSS |
 | **Tooling** | TypeScript (strict mode), pnpm |
 | **Hosting** | Vercel |
+
+## 🧭 Explore the Room
+
+Every section is reachable two ways — by clicking its object in the 3D scene, or
+from the top navigation:
+
+| Section | What's inside |
+| --- | --- |
+| **About** | Bio, focus areas, and animated headline stats |
+| **Experience** | Technical & leadership roles (GenAI Club, IIC, Placement Cell) |
+| **Sports** | Tug of War — college team & VTU inter-college |
+| **Projects** | LGTM, PrepNext, Authentix, AgriSmart, Cardiac Risk Predictor |
+| **Skills** | Languages, Backend, Databases & Infra, AI/ML, Blockchain, Tools |
+| **Achievements** | Hackathon awards + a 900+ LeetCode counter |
+| **Powerlifting** | Squat / Bench / Deadlift personal records |
+| **Contact** | Email + social links |
+
+> No hardware acceleration? The site automatically falls back to a fast, fully
+> accessible static version with the exact same content.
