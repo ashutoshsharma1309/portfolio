@@ -36,6 +36,15 @@ can explore — every object opens a real section of the site.
 - [Author](#-author)
 - [License](#-license)
 
+## 🎯 Why a 3D room?
+
+Most developer portfolios are a scrolling list of cards. This one is a place you
+**explore**. The room is a small, memorable proof of skill in itself — it shows
+comfort with 3D math, performance budgeting, state management, and accessibility,
+all at once. Crucially, it never sacrifices substance for spectacle: every
+interactive object opens a real, content-rich panel, and the entire experience
+degrades gracefully to a fast, accessible static version when 3D isn't available.
+
 ## ✨ Highlights
 
 - **Interactive 3D room** — built with react-three-fiber, drei, and three.js. Click objects or use the nav; the camera smoothly flies to each focus point.
