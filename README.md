@@ -14,6 +14,7 @@
 ![Three.js](https://img.shields.io/badge/Three.js-r169-000000?logo=three.js&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38BDF8?logo=tailwindcss&logoColor=white)
 
+![CI](https://github.com/ashutoshsharma1309/portfolio/actions/workflows/ci.yml/badge.svg)
 ![Status](https://img.shields.io/badge/status-active-success)
 ![Deploys on Vercel](https://img.shields.io/badge/deploys-Vercel-000000?logo=vercel&logoColor=white)
 ![PRs welcome](https://img.shields.io/badge/PRs-welcome-f4b942)
