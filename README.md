@@ -62,3 +62,22 @@ from the top navigation:
 
 > No hardware acceleration? The site automatically falls back to a fast, fully
 > accessible static version with the exact same content.
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js** 18+
+- **pnpm** (recommended) — `npm install -g pnpm`
+
+### Installation
+```bash
+git clone https://github.com/ashutoshsharma1309/portfolio.git
+cd portfolio
+pnpm install
+```
+
+### Run locally
+```bash
+pnpm dev
+```
+Then open the printed URL (default **http://localhost:5173**).
