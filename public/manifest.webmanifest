@@ -1,0 +1,17 @@
+{
+  "name": "Ashutosh Sharma — Portfolio",
+  "short_name": "Ashutosh",
+  "description": "Interactive 3D portfolio of an AI & Backend Engineer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05080f",
+  "theme_color": "#0a1628",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
