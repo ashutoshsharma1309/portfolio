@@ -8,6 +8,17 @@ All notable changes to this project are documented here. The format is based on
 ### Added
 - Comprehensive documentation suite under `docs/`, plus `CONTRIBUTING`,
   `CODE_OF_CONDUCT`, `SECURITY`, and GitHub issue / PR templates.
+- Engineering hygiene: GitHub Actions CI (typecheck + build), Dependabot,
+  `.editorconfig`, Prettier config, `.nvmrc`, `.gitattributes`, CODEOWNERS, and
+  VS Code workspace settings.
+- Deploy hardening via `vercel.json` (SPA rewrite, security headers, immutable
+  asset caching) and SEO assets (`robots.txt`, `sitemap.xml`, web manifest,
+  `humans.txt`).
+
+### Fixed
+- Achievements camera now frames the silver trophy on the bookshelf instead of
+  the social photo frames.
+- Sports camera pulled back so the full gold trophy is visible (was cropped).
 
 ## [1.0.0]
 
