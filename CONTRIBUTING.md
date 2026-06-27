@@ -20,6 +20,11 @@ pnpm typecheck   # strict TypeScript, no errors
 pnpm build       # production build must succeed
 ```
 
+These are the exact steps CI runs on every push and PR
+([.github/workflows/ci.yml](.github/workflows/ci.yml)). Formatting follows the
+shared [Prettier config](.prettierrc.json) and [.editorconfig](.editorconfig) —
+install the recommended VS Code extensions for format-on-save.
+
 ## Conventions
 
 - **TypeScript, strict mode.** No `any` without a justified comment.
