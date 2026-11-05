@@ -2,47 +2,155 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ───────────────────────────── Design tokens ─────────────────────────────
+   Deep ink surfaces + a single warm amber accent (carried over from the
+   original gold identity) and a cool "ice" tone used sparingly for depth. */
+:root {
+  --ink-950: 5 7 12;
+  --ink-900: 9 12 20;
+  --ink-850: 13 17 28;
+  --ink-800: 19 24 38;
+  --ink-700: 32 39 58;
+  --fg: 237 233 225;
+  --muted: 150 156 172;
+  --accent: 244 185 66;
+  --accent-soft: 250 214 140;
+  --accent-deep: 196 132 28;
+  --ice: 140 168 255;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 700ms;
+
+  --nav-h: 4.5rem;
+
+  color-scheme: dark;
+}
+
 html,
 body,
 #root {
-  height: 100%;
   margin: 0;
-  background: #05080f;
-  font-family: "Russo One", "Bebas Neue", system-ui, sans-serif;
+  background: rgb(var(--ink-950));
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: rgb(var(--fg));
+  font-family: Geist, ui-sans-serif, system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgb(var(--accent) / 0.85);
+  color: rgb(var(--ink-950));
+}
+
+/* Visible focus ring for keyboard users only. */
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ───────────────────────────── Lenis ───────────────────────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
   overflow: hidden;
 }
 
-canvas {
+/* ───────────────────────────── Site utilities ───────────────────────────── */
+@layer components {
+  .site-container {
+    @apply mx-auto w-full max-w-site px-4 sm:px-6 lg:px-10;
+  }
+
+  .eyebrow {
+    @apply font-mono text-label uppercase text-muted;
+  }
+
+  /* Hairline surface used for cards. Deliberately NOT glass everywhere —
+     backdrop blur is reserved for the nav. */
+  .surface {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--ink-850) / 0.9),
+      rgb(var(--ink-900) / 0.9)
+    );
+    box-shadow:
+      inset 0 1px 0 0 rgb(255 255 255 / 0.05),
+      0 0 0 1px rgb(255 255 255 / 0.06),
+      0 30px 60px -30px rgb(0 0 0 / 0.6);
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-[11px] tracking-wide text-fg/80;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size var(--dur-slow) var(--ease-out);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* Film-grain overlay — a single static SVG noise tile. */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.045;
+}
+
+/* ───────────────────────────── 3D room (/room) ─────────────────────────────
+   The original immersive room keeps its full-viewport, non-scrolling shell and
+   its own typography. Scoped under .room-mode so it never affects the site. */
+html.room-mode,
+html.room-mode body,
+html.room-mode #root {
+  height: 100%;
+  overflow: hidden;
+  background: #05080f;
+  font-family: "Russo One", "Bebas Neue", system-ui, sans-serif;
+}
+
+html.room-mode canvas {
   display: block;
   outline: none;
   touch-action: none;
 }
 
-/* Block accidental browser pinch-zoom over the canvas only — body-level
-   touch-action stays default so panel scrolling still works. */
+/* Block accidental browser pinch-zoom over the canvas only. */
 .canvas-wrapper {
   touch-action: none;
   -webkit-tap-highlight-color: transparent;
   cursor: default;
 }
-
-/* Default cursor on the canvas; useHotspotHover toggles it to `pointer`
-   imperatively when a hotspot is hovered. */
 .canvas-wrapper canvas {
   cursor: inherit;
 }
 
-/* Visible focus ring for keyboard users only (mouse clicks won't trigger it).
-   Components can opt into a custom ring via focus-visible:ring-* utilities. */
-:focus-visible {
+html.room-mode :focus-visible {
   outline: 2px solid #f4b942;
   outline-offset: 2px;
+  border-radius: 0;
 }
 
 /* Respect the OS "reduce motion" setting as a global safety net. JS-driven
-   (framer-motion / r3f) animations are handled in code via
-   usePrefersReducedMotion; this neutralizes any remaining CSS animations. */
+   animations are handled in code via usePrefersReducedMotion. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -6,6 +6,21 @@ All notable changes to this project are documented here. The format is based on
 ## [Unreleased]
 
 ### Added
+- New scroll-driven portfolio at `/`: editorial design system (Geist, Geist
+  Mono, Instrument Serif; ink + amber tokens), interactive WebGL hero (a node
+  graph that reacts to cursor proximity, pointer and scroll), Lenis smooth
+  scrolling, masked text reveals, tilt / magnetic interactions, generative
+  project covers, a scroll-linked experience timeline, and a 1,400-dot LeetCode
+  visualization. Honors `prefers-reduced-motion`; phones and software-only
+  WebGL get a static hero visual.
+- The original 3D room moved to `/room` (lazy-loaded, unchanged behaviour) with
+  a link back to the portfolio.
+
+### Changed
+- LeetCode solved count updated to 1400+ everywhere it appears.
+- `robots.txt`: removed the relative `Sitemap:` URL (invalid per spec) until the
+  production domain is final.
+
 - Comprehensive documentation suite under `docs/`, plus `CONTRIBUTING`,
   `CODE_OF_CONDUCT`, `SECURITY`, and GitHub issue / PR templates.
 - Engineering hygiene: GitHub Actions CI (typecheck + build), Dependabot,

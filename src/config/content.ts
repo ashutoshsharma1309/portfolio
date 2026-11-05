@@ -20,7 +20,7 @@ export const BIO = {
   about: [
     "I am Ashutosh Sharma, a Computer Science undergraduate at BMS Institute of Technology & Management (CGPA: 8.7) passionate about AI, Backend Engineering, Cybersecurity, and scalable software systems.",
     "I enjoy building production-grade full-stack applications, AI-powered developer tools, and automation platforms that solve real-world problems. My interests include Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), DevOps, distributed backend systems, and software architecture.",
-    "Beyond academics, I actively participate in hackathons, competitive programming, and open-source development. I have solved 900+ LeetCode problems and enjoy transforming complex ideas into polished products.",
+    "Beyond academics, I actively participate in hackathons, competitive programming, and open-source development. I have solved 1400+ LeetCode problems and enjoy transforming complex ideas into polished products.",
     "I believe in writing clean, scalable, production-ready code while constantly exploring emerging technologies in AI and modern software engineering.",
   ],
 };
@@ -37,13 +37,13 @@ export interface Stat {
 }
 
 export const stats: Stat[] = [
-  { id: "leetcode", value: 900, suffix: "+", label: "LeetCode Problems" },
+  { id: "leetcode", value: 1400, suffix: "+", label: "LeetCode Problems" },
   { id: "hackathons", value: 7, suffix: "+", label: "Hackathon Awards" },
   { id: "projects", value: 5, suffix: "", label: "Projects Built" },
   { id: "mentored", value: 100, suffix: "+", label: "Students Mentored" },
 ];
 
-export const LEETCODE = { count: 900, suffix: "+" };
+export const LEETCODE = { count: 1400, suffix: "+" };
 
 // ---------- About: focus-area cards ----------
 
@@ -82,7 +82,7 @@ export const focusAreas: FocusArea[] = [
   {
     id: "cp",
     label: "Competitive Programming",
-    description: "900+ LeetCode problems — efficient, not just functional.",
+    description: "1400+ LeetCode problems — efficient, not just functional.",
     icon: "code",
   },
   {

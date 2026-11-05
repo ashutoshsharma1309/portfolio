@@ -3,4 +3,6 @@ User-agent: *
 Allow: /
 
 # Sitemap (update the host once the production domain is set)
-Sitemap: /sitemap.xml
+# Sitemap: https://<production-domain>/sitemap.xml
+# (The Sitemap directive requires an absolute URL — uncomment once the
+#  production domain is final.)

@@ -79,6 +79,15 @@ export default function App() {
       <TopNav />
       <BackButton />
 
+      {/* Exit back to the scroll-driven portfolio at "/". Sits below panels
+          (z-10 < z-20) so it never covers an open dialog. */}
+      <a
+        href="/"
+        className="absolute bottom-6 left-6 z-10 flex min-h-[44px] items-center gap-2 rounded-full border border-gold/30 bg-navy/80 px-4 text-xs uppercase tracking-widest text-gold backdrop-blur-sm transition-colors hover:border-gold/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
+      >
+        <span aria-hidden="true">←</span> Portfolio
+      </a>
+
       <AnimatePresence mode="wait">
         {active === "aboutFrames" && <AboutPanel key="about" />}
         {active === "experience" && <ExperiencePanel key="experience" />}

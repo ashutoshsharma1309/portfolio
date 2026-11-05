@@ -87,7 +87,7 @@ from the top navigation:
 | **Sports** | Tug of War — college team & VTU inter-college |
 | **Projects** | LGTM, PrepNext, Authentix, AgriSmart, Cardiac Risk Predictor |
 | **Skills** | Languages, Backend, Databases & Infra, AI/ML, Blockchain, Tools |
-| **Achievements** | Hackathon awards + a 900+ LeetCode counter |
+| **Achievements** | Hackathon awards + a 1400+ LeetCode counter |
 | **Powerlifting** | Squat / Bench / Deadlift personal records |
 | **Contact** | Email + social links |
 
@@ -139,11 +139,29 @@ Prettier, and recommended extensions keep formatting consistent across machines.
 
 ## 📁 Project Structure
 
+Two experiences share one content source:
+
+| Route   | Experience |
+|---------|------------|
+| `/`     | Scroll-driven portfolio with a WebGL hero (`src/site/`) |
+| `/room` | The original interactive 3D room (`src/RoomApp.tsx`, lazy-loaded) |
+
 ```
 src/
-├─ App.tsx                 # App shell: scene, panels, loading, error boundary
-├─ main.tsx                # Entry point
-├─ index.css               # Tailwind layers + global a11y styles
+├─ main.tsx                # Entry point — picks / or /room by pathname
+├─ RoomApp.tsx             # 3D room shell: scene, panels, loading, error boundary
+├─ index.css               # Design tokens, Tailwind layers, room-scoped styles
+├─ site/                   # Scroll-driven portfolio (/)
+│  ├─ SiteApp.tsx          # Layout + Lenis smooth scroll
+│  ├─ motion.ts            # Easing / duration tokens shared by all motion
+│  ├─ sections/            # Nav, Hero, About, Projects, Skills, Experience,
+│  │                       #   Achievements, Profiles, Beyond, Contact/Footer
+│  ├─ hero/                # NeuralCore (R3F scene, lazy chunk), HeroVisual
+│  │                       #   (WebGL detection + static fallback), heroSignal
+│  ├─ ui/                  # RevealText, TiltCard, Magnetic, SectionHeader,
+│  │                       #   ProjectCover, Backdrop, BrandIcon, ErrorBoundary
+│  ├─ hooks/               # useActiveSection, usePointerFine
+│  └─ lib/smoothScroll.ts  # Lenis facade (scroll-to-section, scroll lock)
 ├─ components/
 │  ├─ nav/                 # TopNav (desktop bar + mobile menu)
 │  ├─ scene/               # 3D room: Room, Scene, CameraRig, Lighting, Desk,
