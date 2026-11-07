@@ -251,7 +251,7 @@ export function Desk() {
           Sits low so it doesn't block other clickable items in front. */}
       <mesh position={[1.0, 1.0, 0.0]}>
         <boxGeometry args={[3.6, 1.4, 1.4]} />
-        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        <meshBasicMaterial visible={false} />
       </mesh>
 
       {/* Walnut L top (long arm along the wall + short arm toward the room) */}
@@ -281,10 +281,10 @@ export function Desk() {
       <spotLight
         position={[1.1, UNDER_Y - 0.08, 0.3]}
         target={floorGlowTarget}
-        angle={0.6}
+        angle={0.85}
         penumbra={1}
-        intensity={10}
-        distance={3}
+        intensity={3.5}
+        distance={2.4}
         decay={2}
         color="#4ea8ff"
       />

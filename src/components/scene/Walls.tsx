@@ -44,7 +44,9 @@ function Floor() {
     // (architecture/roomShading.ts), not from stretching the texture.
     const wood = createWood(q, {
       repeat: [FLOOR_SIZE / 1.2, FLOOR_SIZE / 1.2],
-      color: new Color(1.6, 1.47, 1.34),
+      // Mild warm/neutral tint only. (Was 1.6/1.47/1.34 to offset the old
+      // ContactShadows whole-floor darkening, fixed in Scene.tsx.)
+      color: new Color(0.95, 0.89, 0.84),
       roughness: 0.44,
       envMapIntensity: 0.85,
       // Board gaps stay crisp in albedo; the AO groove is softened so seams

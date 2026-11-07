@@ -263,7 +263,7 @@ export function Whiteboard() {
           generous halo for finger taps. */}
       <mesh position={[0, 0, 0.12]}>
         <boxGeometry args={[2.9, 2.0, 0.2]} />
-        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        <meshBasicMaterial visible={false} />
       </mesh>
 
       {/* Soft contact shadow on the plaster (local +x = world -z). */}
@@ -303,7 +303,10 @@ export function Whiteboard() {
       </group>
 
       {/* Handwritten text via HTML */}
+      {/* pointerEvents="none" reaches drei's OUTER wrapper (style only reaches
+          the inner div), so the text never blocks clicks/drags on the board. */}
       <Html
+        pointerEvents="none"
         position={[0, 0.05, 0.012]}
         center
         transform

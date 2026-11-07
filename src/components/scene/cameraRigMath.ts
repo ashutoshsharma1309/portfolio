@@ -158,7 +158,7 @@ const OBSTACLES: ReadonlyArray<readonly [number, number, number, number, number,
   // Drawer unit
   [-1.0, 0, -5, 0.2, 1.3, -3.6],
   // Wall shelf + hackathon cup
-  [0.5, 2.7, -5, 3.6, 4.3, -4.2],
+  [-0.6, 2.7, -5, 2.3, 4.3, -4.2],
   // Beanbag + side table
   [-4.2, 0, 0.5, -1.5, 1.3, 3.0],
   // Sports trophy plinth + cup

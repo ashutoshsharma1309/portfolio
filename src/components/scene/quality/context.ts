@@ -2,7 +2,8 @@ import { createContext } from "react";
 import { QUALITY_CONFIGS, type RendererProbe, type RoomQuality, type RoomQualityConfig } from "./config";
 
 export interface RoomQualityState {
-  /** Current tier. Can only move DOWN at runtime (PerformanceMonitor). */
+  /** Current tier. Moves down on sustained low FPS (PerformanceMonitor) and
+   *  may recover, but never rises above `startTier`. */
   readonly tier: RoomQuality;
   /** Knobs for the current tier. */
   readonly config: RoomQualityConfig;
@@ -18,8 +19,8 @@ export interface RoomQualityState {
   readonly pinned: boolean;
   /** Renderer probe result (null outside the Canvas). */
   readonly probe: RendererProbe | null;
-  /** DPR range currently applied to the Canvas. */
-  readonly dpr: readonly [number, number];
+  // DPR is intentionally not in the context (a DPR-only step must not give
+  // this object a new identity: materials are memoized on it).
 }
 
 const FALLBACK = QUALITY_CONFIGS.medium;
@@ -32,5 +33,4 @@ export const RoomQualityContext = createContext<RoomQualityState>({
   anisotropy: FALLBACK.maxAnisotropy,
   pinned: false,
   probe: null,
-  dpr: FALLBACK.dpr,
 });

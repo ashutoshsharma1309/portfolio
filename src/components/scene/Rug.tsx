@@ -22,13 +22,12 @@ const DESIGN: RugDesign = {
   ],
   radius: RADIUS,
 };
-/** The fabric texture's albedo averages ~0.85, so the base is lifted to land
- *  the pile on the original cream, kept a touch cooler than a straight
- *  scale so it reads cream rather than khaki under the warm key light.
- *  Effective albedo stays just under 1 (the red channel clips otherwise). */
-const PILE_COLOR = new Color(DESIGN.base).multiply(new Color(1.5, 1.52, 1.66));
+/** The original cream with a slight cool lift so it reads cream rather than
+ *  khaki under the warm key light. (The old 1.5× boost compensated for the
+ *  ContactShadows whole-floor darkening, since fixed, and now blew out.) */
+const PILE_COLOR = new Color(DESIGN.base).multiply(new Color(0.98, 0.98, 1.06));
 /** Shared pile settings for the top and the rolled edge. */
-const PILE = { roughness: 0.95, sheen: 0.3, envMapIntensity: 0.6, aoMapIntensity: 0.3, normalScale: 0.4 } as const;
+const PILE = { roughness: 0.95, sheen: 0.3, envMapIntensity: 0.6, aoMapIntensity: 0.3, normalScale: 0.6 } as const;
 /** Visible loop pitch: one fabric tile = 0.3 m (≈9 mm loops). */
 const PILE_TILE_M = 0.3;
 /** Pile top / underside relative to the group (group y = 0.05; the floor

@@ -50,7 +50,9 @@ function buildMaterials(q: MaterialQuality) {
       ...dark,
       color: "#131416",
       roughness: 0.52,
-      wear: 0.44,
+      // Light edge chipping only: at 0.44 large grey patches showed mid-span
+      // on the (rarely touched) top crossmember.
+      wear: 0.2,
       rust: 0.38,
       // Height rust kept to the last few cm above the feet; everything else
       // comes from the joint/bolt hotspots (no mid-span stains).
@@ -60,8 +62,8 @@ function buildMaterials(q: MaterialQuality) {
       hotspots: [
         hs([-UPRIGHT_X, JHOOK_BENCH_Y + 0.03, TUBE / 2 + 0.02], 0.1),
         hs([UPRIGHT_X, JHOOK_BENCH_Y + 0.03, TUBE / 2 + 0.02], 0.1),
-        hs([-UPRIGHT_INNER, TOP_XM_Y, 0], 0.13),
-        hs([UPRIGHT_INNER, TOP_XM_Y, 0], 0.13),
+        hs([-UPRIGHT_INNER, TOP_XM_Y, 0], 0.06),
+        hs([UPRIGHT_INNER, TOP_XM_Y, 0], 0.06),
         hs([-UPRIGHT_X, FOOT_TOP + 0.02, 0.05], 0.09),
         hs([UPRIGHT_X, FOOT_TOP + 0.02, -0.05], 0.09),
         hs([-UPRIGHT_X - 0.05, 0.06, FOOT_Z1 - 0.06], 0.08),

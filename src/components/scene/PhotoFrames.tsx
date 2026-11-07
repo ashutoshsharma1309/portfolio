@@ -304,7 +304,7 @@ function Frame({
           and absorbs touch events with extra margin (1.4× geometry). */}
       <mesh position={[0, 0, 0.08]} onPointerOver={onPointerOver} onPointerOut={onPointerOut} onClick={handleClick}>
         <boxGeometry args={[1.2, 1.2, 0.18]} />
-        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        <meshBasicMaterial visible={false} />
       </mesh>
       <group position={[0, 0, BACK_Z]}>
         {/* Mitred walnut moulding */}

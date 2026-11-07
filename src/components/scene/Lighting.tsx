@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { ContactShadows, Environment, Lightformer } from "@react-three/drei";
 import { BackSide, Box3, Color, OrthographicCamera, Vector3, type DirectionalLight } from "three";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
-import { useRoomQuality } from "./quality";
+import { QUALITY_CONFIGS, useRoomQuality } from "./quality";
 
 // ---------------------------------------------------------------------------
 // Lighting rig for the cutaway room (floor + back wall at z=-5 + left wall at
@@ -21,7 +21,10 @@ import { useRoomQuality } from "./quality";
 // ---------------------------------------------------------------------------
 
 /** Direction TOWARD the sun (from the room center). +x = window side. */
-const SUN_DIR = new Vector3(0.62, 0.72, 0.31).normalize();
+// z raised from 0.31: at 0.31 the sun grazed the back wall (~18°), so shelf /
+// vine shadows were thrown 2× their wall distance sideways and floated as
+// detached smudges. 0.42 tucks them under the casters.
+const SUN_DIR = new Vector3(0.55, 0.72, 0.42).normalize();
 const SUN_DISTANCE = 18;
 const SUN_INTENSITY = 2.6;
 const SUN_COLOR = new Color("#fff1de");
@@ -80,8 +83,12 @@ function fitShadowCamera(light: DirectionalLight, mapSize: number) {
 export function Lighting() {
   const sunRef = useRef<DirectionalLight>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const { config } = useRoomQuality();
+  const { config, startTier } = useRoomQuality();
   const shadowMapSize = config.shadowMapSize;
+  // Both passes render once (frames={1}), so lowering them at runtime saves
+  // nothing per frame — and drei's ContactShadows never disposes the render
+  // targets it re-creates on a resolution change. Pin them to the start tier.
+  const { envResolution, contactShadowResolution } = QUALITY_CONFIGS[startTier];
 
   useLayoutEffect(() => {
     const light = sunRef.current;
@@ -127,7 +134,7 @@ export function Lighting() {
       {/* Warm interior fill from the open front (no shadows). */}
       <directionalLight position={[-3, 5, 10]} intensity={0.35} color="#ffe6c7" />
 
-      <Environment resolution={config.envResolution} frames={1} environmentIntensity={1}>
+      <Environment resolution={envResolution} frames={1} environmentIntensity={1}>
         {/* Enclosure: the rest of a dim warm interior. */}
         <mesh scale={40}>
           <sphereGeometry args={[1, 32, 16]} />
@@ -152,7 +159,7 @@ export function Lighting() {
         frames={1}
         position={[0, CONTACT_SHADOW_Y, 0]}
         scale={10.4}
-        resolution={config.contactShadowResolution}
+        resolution={contactShadowResolution}
         far={1.6}
         blur={2.2}
         opacity={0.42}

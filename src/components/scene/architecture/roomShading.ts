@@ -211,6 +211,10 @@ diffuseColor *= sampledDiffuseColor;
 
 const FLOOR_TINT = /* glsl */ `
 {
+  // The shared woodPlanks albedo is tuned warm for furniture; on a 10 m floor
+  // under daylight it read as saturated orange laminate. Pull it ~28% toward
+  // its luminance so it reads as natural oak.
+  diffuseColor.rgb = mix(vec3(dot(diffuseColor.rgb, vec3(0.299, 0.587, 0.114))), diffuseColor.rgb, 0.72);
   vec2 rid = vec2(rsBoard, rsRun);
   float bt = rsHash(rid + vec2(91.0, 0.5)) - 0.5;
   float bh = rsHash(rid + vec2(53.0, 0.5)) - 0.5;

@@ -20,14 +20,14 @@ component can call:
 
 ```ts
 const q = useRoomQuality();
-// q.tier         'high' | 'medium' | 'low'   (current tier; only ever drops at runtime)
+// q.tier         'high' | 'medium' | 'low'   (current tier; never above startTier)
 // q.config       RoomQualityConfig for q.tier
 // q.startTier    tier chosen at startup
 // q.textureSize  base texture size to request (pinned to startTier)
 // q.anisotropy   anisotropy to use (pinned, clamped to the GPU)
 // q.pinned       true if ?quality= forced the tier
 // q.probe        { renderer, software, cores, gpuMaxAnisotropy }
-// q.dpr          DPR range currently applied
+// (DPR is not on the context: a DPR-only step must not rebuild materials.)
 ```
 
 | knob (`q.config.*`)       | high | medium | low  |
@@ -45,15 +45,16 @@ const q = useRoomQuality();
 
 How the tier is picked:
 - The start tier comes from `useDeviceTier()` (mobile → low, tablet → medium,
-  desktop → high). It drops one step if the WebGL renderer is a software
-  rasterizer (SwiftShader, llvmpipe, "software") or if
-  `navigator.hardwareConcurrency <= 4`.
-- At runtime, drei `<PerformanceMonitor>` starts after a 3.5 s warm-up. If FPS
-  stays low (75% of 10×250 ms samples under 40 fps, or under 50 fps on
-  displays above 100 Hz), it steps down: high → medium → low, then cuts DPR
-  in 0.15 steps. Inclines are disabled, so the tier never goes back up and
-  never flaps. After 3 declines, `onFallback` sets the minimum settings and
-  monitoring stops.
+  desktop → high), read ONCE at mount (a resize/rotation never changes it). It
+  drops one step if the WebGL renderer is a software rasterizer (SwiftShader,
+  llvmpipe, "software") or if `navigator.hardwareConcurrency <= 4`.
+- At runtime, drei `<PerformanceMonitor>` is armed 4 s after the scene reports
+  "ready" (after the entry move). If FPS stays low (75% of 10×250 ms samples
+  under 40 fps, or under 50 fps on displays above 100 Hz), it steps down:
+  high → medium → low, then cuts DPR in 0.15 steps (never below 1.0 when the
+  start tier is high). If FPS stays at the refresh rate it recovers one step,
+  never above the start tier. The monitor is remounted 2 s after every change
+  (so the change's own hitch isn't sampled) and stops after 4 changes.
 - **Texture size and anisotropy are pinned to the start tier.** A runtime
   downgrade never regenerates textures. It does change `config`, so materials
   memoized on `q` get rebuilt (physical → standard, which is cheaper).

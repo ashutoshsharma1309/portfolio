@@ -4,7 +4,9 @@
 // last one leaning on its neighbour) and a trailing pothos in a terracotta pot
 // at the left end. The right end stays clear for the hackathon trophy.
 //
-// Shelf origin (world 2.0, 3.0, -4.78): board centred on it, top at y = 0.03.
+// Shelf origin (world 0.75, 3.0, -4.78): board centred on it, top at y = 0.03.
+// The 2.2 m board spans world x -0.35..1.85: on solid wall between the photo
+// frames (right edge -0.625) and the window casing (outer edge 1.935).
 // The back wall's front face is at local z = -0.145.
 
 import { useMemo, useRef } from "react";
@@ -110,8 +112,10 @@ function buildPlantLayout(): { leaves: LeafSpec[]; stems: Vector3[][] } {
   }
   // Trailing vines: [path control points] relative to soil centre (y = 0).
   const vines: Vector3[][] = [
-    // over the front edge (+z), board edge at z ≈ 0.275 → hangs below the shelf
-    [new Vector3(0.03, 0.0, 0.05), new Vector3(0.05, 0.01, 0.12), new Vector3(0.06, -0.12, 0.24), new Vector3(0.05, -0.14, 0.295), new Vector3(0.04, -0.3, 0.3), new Vector3(0.06, -0.46, 0.29)],
+    // over the front edge (+z), board edge at z ≈ 0.275 → hangs below the
+    // shelf, kept close to the edge (and short) so its leaves don't throw
+    // detached shadow smudges far down the wall.
+    [new Vector3(0.03, 0.0, 0.05), new Vector3(0.05, 0.01, 0.12), new Vector3(0.06, -0.12, 0.24), new Vector3(0.05, -0.14, 0.28), new Vector3(0.04, -0.24, 0.28), new Vector3(0.06, -0.32, 0.28)],
     // over the left end of the board (x ≈ -0.2 from the pot centre)
     [new Vector3(-0.04, 0.0, 0.0), new Vector3(-0.1, 0.0, 0.03), new Vector3(-0.19, -0.1, 0.05), new Vector3(-0.215, -0.16, 0.06), new Vector3(-0.22, -0.3, 0.07)],
   ];
@@ -194,8 +198,8 @@ export function Bookshelf() {
   const mats = useDisposable(
     () => ({
       // Solid walnut board, grain along x. Box UVs are 0..1 per face, so the
-      // repeat maps the 2.4 × 0.55 m top face to physical scale.
-      wood: createWalnut(q, { repeat: [2.4 / VENEER_TILE_U, 0.55 / VENEER_TILE_V], offset: [0.52, 0.13], clearcoat: 0.15 }),
+      // repeat maps the 2.2 × 0.55 m top face to physical scale.
+      wood: createWalnut(q, { repeat: [2.2 / VENEER_TILE_U, 0.55 / VENEER_TILE_V], offset: [0.52, 0.13], clearcoat: 0.15 }),
       // Fine, low-relief orange peel: the gusset (UVs at true scale, facing the
       // window) showed the full-strength bump as grey speckle.
       steel: createPowderCoat(q, { color: "#1b1c1e", widthM: 0.3, heightM: 0.3, roughness: 0.6, normalScale: 0.35, envMapIntensity: 0.7 }),
@@ -207,10 +211,10 @@ export function Bookshelf() {
 
   const geo = useDisposable(() => {
     const seg = low ? 2 : 4;
-    const board = rbox(2.4, 0.06, 0.55, 0.009, seg);
+    const board = rbox(2.2, 0.06, 0.55, 0.009, seg);
     // L-brackets: wall plate + shelf arm + triangular gusset + screw heads.
     const parts = [];
-    for (const bx of [-1.0, 1.0]) {
+    for (const bx of [-0.9, 0.9]) {
       // UVs at true scale (1 UV = 0.3 m, as the material's widthM) so plate,
       // arm and gusset all show the same powder-coat finish.
       parts.push(place(metricBoxUVs(rbox(0.036, 0.24, 0.006, 0.0025, 2), 0.036, 0.24, 0.006, 0.3), [bx, -0.03 - 0.12, WALL_Z + 0.003]));
@@ -254,7 +258,7 @@ export function Bookshelf() {
   }, [low]);
 
   return (
-    <group position={[2.0, 3.0, -4.78]}>
+    <group position={[0.75, 3.0, -4.78]}>
       <mesh geometry={geo.board} material={mats.wood} castShadow receiveShadow />
       <mesh geometry={geo.brackets} material={mats.steel} castShadow />
 
@@ -263,7 +267,7 @@ export function Bookshelf() {
       <Books books={SHELF_BOOKS} castShadow />
 
       {/* Small plant at the left end of the shelf (pot base on the board). */}
-      <group position={[-1.0, 0.18, 0]}>
+      <group position={[-0.9, 0.18, 0]}>
         <mesh geometry={geo.pot} material={mats.pot} castShadow receiveShadow />
         <mesh geometry={geo.soil} material={mats.soil} />
         <group position={[0, -0.032, 0]}>

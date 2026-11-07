@@ -9,6 +9,7 @@ import { RACK_POSITION, RACK_ROT_Y } from "./lifting/constants";
 import { LiftingStatic } from "./lifting/LiftingStatic";
 import { RackHardware } from "./lifting/RackFrame";
 import { Platform } from "./lifting/Platform";
+import { useRoomQuality } from "./quality";
 
 // Lifting corner: commercial power rack (75x75 mm uprights, bolted feet,
 // J-hooks with UHMW liners), loaded bar on the squat-height hooks, flat bench
@@ -27,6 +28,10 @@ export function PowerliftingRack() {
   const targets = useMemo(() => hoverTargets(mats), [mats]);
   const mix = useHoverMix(hovered);
   const lightRef = useRef<PointLight>(null);
+  // An always-mounted point light is shaded on every lit pixel. On the low
+  // (mobile / weak-GPU) start tier the eased emissive hover alone carries the
+  // feedback. startTier never changes, so this never forces a recompile.
+  const hoverLight = useRoomQuality().startTier !== "low";
 
   // Smooth hover: eased warm emissive on the frame/plates/pad plus a soft
   // warm fill light. The light is always mounted (intensity animated) so
@@ -54,7 +59,7 @@ export function PowerliftingRack() {
           Easier to land a finger on than the thin posts. */}
       <mesh position={[0, 1.4, 0.3]}>
         <boxGeometry args={[2.8, 2.8, 1.8]} />
-        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+        <meshBasicMaterial visible={false} />
       </mesh>
 
       {/* Power rack, J-hooks, loaded barbell, bench and the two dumbbells:
@@ -68,7 +73,9 @@ export function PowerliftingRack() {
       <Platform m={mats} />
 
       {/* Hover glow indicator (eased, warm, subtle) */}
-      <pointLight ref={lightRef} position={[0, 1.5, 0.4]} intensity={0} distance={2.5} color="#ffd766" />
+      {hoverLight && (
+        <pointLight ref={lightRef} position={[0, 1.5, 0.4]} intensity={0} distance={2.5} color="#ffd766" />
+      )}
     </group>
   );
 }

@@ -16,7 +16,7 @@
 //                  and (high tier) a lacquer clearcoat.
 //   spotlight      sibling, doesn't bob (unchanged role).
 
-import { useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { animated, useSpring } from "@react-spring/three";
@@ -214,6 +214,7 @@ export function Trophy({
   const setHotspot = useSceneStore((s) => s.setHotspot);
   const { hovered, onPointerOver, onPointerOut } = useHotspotHover(hotspot);
   const tier = useDeviceTier();
+  const [mountTier] = useState(tier);
   const reducedMotion = usePrefersReducedMotion();
   const q = useRoomQuality();
   const hoverMix = useHoverMix(hovered, 10);
@@ -274,12 +275,15 @@ export function Trophy({
     () =>
       arcLathe(
         [
-          [displayRadius - 0.034, 0],
-          [displayRadius - 0.034, 0.002],
-          [displayRadius - 0.031, 0.0035],
-          [displayRadius - 0.019, 0.0035],
-          [displayRadius - 0.016, 0.002],
+          // ~30 mm wide inlay. Profile runs outer → inner so the lathe's
+          // normals face UP (the reverse order faced down and the top was
+          // back-face culled, which is why the glowing ring had vanished).
           [displayRadius - 0.016, 0],
+          [displayRadius - 0.016, 0.002],
+          [displayRadius - 0.019, 0.0035],
+          [displayRadius - 0.043, 0.0035],
+          [displayRadius - 0.046, 0.002],
+          [displayRadius - 0.046, 0],
         ],
         seg,
       ),
@@ -386,7 +390,7 @@ export function Trophy({
     const ring = mats.ringMetal;
     if (reducedMotion) {
       if (bobRef.current) bobRef.current.position.y = (BASE_H + LEVITATE_MIN + LEVITATE_AMP) * bodyScale;
-      ring.emissiveIntensity = 0.05 + hoverMix.current * 0.25;
+      ring.emissiveIntensity = 0.7 + hoverMix.current * 0.3;
     } else {
       // Ease the bob speed (1.2 idle → 2.4 hovered) and integrate the phase
       // so changing speed never makes the trophy jump.
@@ -398,13 +402,16 @@ export function Trophy({
         bobRef.current.position.y = (BASE_H + lift) * bodyScale;
       }
       const pulse = 0.5 + 0.5 * Math.sin(state.clock.getElapsedTime() * 1.5);
-      ring.emissiveIntensity = 0.02 + pulse * 0.05 + hoverMix.current * 0.25;
+      // Visible ~4 s "breathing" glow of the inlay (as in the original).
+      ring.emissiveIntensity = 0.25 + pulse * 0.75 + hoverMix.current * 0.3;
     }
     applyHoverEmissive([mats.cup], hoverMix.current, metalEmissive, 0.1);
     applyHoverEmissive([mats.upper, mats.plateMat], hoverMix.current, metalEmissive, 0.05);
   });
 
-  const castSpotShadow = tier === "desktop" && q.tier === "high";
+  // Device tier captured at mount: a resize must never change how many
+  // lights cast shadows (that recompiles every lit shader).
+  const castSpotShadow = mountTier === "desktop" && q.tier === "high";
   const s = bodyScale;
 
   return (
@@ -453,7 +460,7 @@ export function Trophy({
               }}
             >
               <boxGeometry args={[1.0, 1.2, 1.0]} />
-              <meshBasicMaterial transparent opacity={0} depthWrite={false} />
+              <meshBasicMaterial visible={false} />
             </mesh>
 
             <group scale={s}>

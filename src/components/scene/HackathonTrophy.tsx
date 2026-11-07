@@ -1,7 +1,7 @@
 // Polished nickel/chrome cup with a blue anodised band — sits at the right
 // end of the bookshelf above the desk.
 //
-// Bookshelf is at world (2.0, 3.0, -4.78). Shelf board is 0.06 thick centered
+// Bookshelf is at world (0.75, 3.0, -4.78) (on solid wall left of the window). Shelf board is 0.06 thick centered
 // on y=3.0, so its top surface is at y=3.03. Trophy origin = bottom of base,
 // so origin Y = 3.03 puts the base flush on the shelf.
 //
@@ -13,7 +13,7 @@ import { Trophy } from "./Trophy";
 export function HackathonTrophy() {
   return (
     <Trophy
-      position={[2.85, 3.03, -4.78]}
+      position={[1.5, 3.03, -4.78]}
       hotspot="hackathonTrophy"
       finish="silver"
       plinth="blackAcrylic"
