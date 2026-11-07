@@ -21,7 +21,7 @@ export function AboutPanel() {
         <div className="mt-2 flex items-center gap-2 text-xs text-white/50">
           <Icon name="sparkles" size={14} className="text-gold/70" />
           {BIO.education.degree} · {BIO.education.school} · CGPA{" "}
-          {BIO.education.cgpa}
+          {BIO.education.cgpa} · {BIO.education.period}
         </div>
       </Reveal>
 

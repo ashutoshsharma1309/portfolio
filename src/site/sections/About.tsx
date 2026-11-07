@@ -96,6 +96,9 @@ export function About() {
                 <div className="mt-1 text-sm leading-relaxed text-muted">
                   {BIO.education.school}
                 </div>
+                <div className="mt-3 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+                  {BIO.education.period}
+                </div>
                 <div className="mt-6 flex items-baseline gap-2 border-t border-white/[0.07] pt-5">
                   <span className="text-4xl font-medium tracking-tight text-fg">
                     {BIO.education.cgpa}

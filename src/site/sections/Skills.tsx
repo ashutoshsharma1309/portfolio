@@ -19,7 +19,9 @@ function norm(s: string) {
 const SPANS: Record<string, string> = {
   languages: "md:col-span-7",
   backend: "md:col-span-5",
-  infra: "md:col-span-5",
+  infra: "md:col-span-8",
+  frontend: "md:col-span-4",
+  core: "md:col-span-5",
   aiml: "md:col-span-7",
   blockchain: "md:col-span-4",
   tools: "md:col-span-8",

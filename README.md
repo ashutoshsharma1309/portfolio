@@ -83,11 +83,11 @@ from the top navigation:
 | Section | What's inside |
 | --- | --- |
 | **About** | Bio, focus areas, and animated headline stats |
-| **Experience** | Technical & leadership roles (GenAI Club, IIC, Placement Cell) |
+| **Experience** | Technical & leadership roles (Zarthi, GenAI Club, PALS, IIC, Placement Cell) |
 | **Sports** | Tug of War — college team & VTU inter-college |
-| **Projects** | LGTM, PrepNext, Authentix, AgriSmart, Cardiac Risk Predictor |
-| **Skills** | Languages, Backend, Databases & Infra, AI/ML, Blockchain, Tools |
-| **Achievements** | Hackathon awards + a 1400+ LeetCode counter |
+| **Projects** | NexArch, LGTM, PrepNext, Authentix, AgriSmart, Cardiac Risk Predictor |
+| **Skills** | Languages, Backend, Databases & Infra, Frontend, Core CS, AI/ML, Blockchain, Tools |
+| **Achievements** | Hackathon awards + a 1000+ LeetCode counter |
 | **Powerlifting** | Squat / Bench / Deadlift personal records |
 | **Contact** | Email + social links |
 

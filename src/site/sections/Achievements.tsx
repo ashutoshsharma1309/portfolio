@@ -11,13 +11,18 @@ export function prizeText(prize: string) {
   return prize.replace(/^[\p{Extended_Pictographic}️‍\s]+/u, "");
 }
 
+/** Groups by year, newest first; undated results go last under "Also"
+ *  rather than being assigned a guessed year. */
 function groupByYear(items: Achievement[]) {
+  const UNDATED = "Also";
   const groups = new Map<string, Achievement[]>();
   for (const a of items) {
-    const y = a.date ?? "—";
+    const y = a.date ?? UNDATED;
     groups.set(y, [...(groups.get(y) ?? []), a]);
   }
-  return [...groups.entries()];
+  const yearOf = (k: string) =>
+    k === UNDATED ? -Infinity : parseInt(k, 10) || 0;
+  return [...groups.entries()].sort(([a], [b]) => yearOf(b) - yearOf(a));
 }
 
 export function Achievements() {
@@ -46,7 +51,11 @@ export function Achievements() {
               <div className="md:col-span-3">
                 <div className="md:sticky md:top-28">
                   <div
-                    className="text-[clamp(3.5rem,9vw,7.5rem)] font-semibold leading-none tracking-[-0.05em] text-transparent"
+                    className={`font-semibold leading-none tracking-[-0.05em] text-transparent ${
+                      year.length > 4
+                        ? "text-[clamp(2.75rem,5.5vw,4.5rem)]"
+                        : "text-[clamp(3.5rem,9vw,7.5rem)]"
+                    }`}
                     style={{
                       WebkitTextStroke: "1px rgb(var(--accent) / 0.55)",
                     }}

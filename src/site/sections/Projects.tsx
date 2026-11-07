@@ -126,7 +126,7 @@ function ProjectCard({
             </span>
           )
         )}
-        <StatusPill status={project.status} />
+        {project.status && <StatusPill status={project.status} />}
         {project.tags?.map((t) => (
           <span
             key={t}
@@ -302,8 +302,10 @@ const SPANS = [
 ];
 
 export function Projects() {
-  const flagship = projects.find((p) => p.flagship);
-  const rest = projects.filter((p) => p !== flagship);
+  // Every flagship gets a full-width editorial card; the rest share the
+  // asymmetric grid below.
+  const flagships = projects.filter((p) => p.flagship);
+  const rest = projects.filter((p) => !p.flagship);
 
   return (
     <section
@@ -318,19 +320,15 @@ export function Projects() {
           label="Selected work"
           title="Things I've designed, built, and shipped."
           accentWords={["shipped."]}
-          intro="A curated selection — from an AI code-review platform to a full-stack placement system. Expand any project for the full case study."
+          intro="A curated selection — from agentic code generation and AI code review to a full-stack placement system. Expand any project for the full case study."
         />
 
         <div className="grid gap-6 md:gap-8 lg:grid-cols-12">
-          {flagship && (
-            <div className="lg:col-span-12">
-              <ProjectCard
-                project={flagship}
-                index={projects.indexOf(flagship)}
-                flagship
-              />
+          {flagships.map((p) => (
+            <div key={p.id} className="lg:col-span-12">
+              <ProjectCard project={p} index={projects.indexOf(p)} flagship />
             </div>
-          )}
+          ))}
           {rest.map((p, i) => (
             <div key={p.id} className={SPANS[i % SPANS.length]}>
               <ProjectCard

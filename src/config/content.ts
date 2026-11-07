@@ -13,14 +13,15 @@ export const BIO = {
     "Computer Science undergraduate building production-grade full-stack apps, AI-powered developer tools, and automation platforms that solve real problems.",
   education: {
     school: "BMS Institute of Technology & Management",
-    degree: "B.E. Computer Science",
-    cgpa: "8.7",
+    degree: "B.E. Computer Science & Engineering",
+    cgpa: "8.58",
+    period: "Oct 2024 – Jul 2028",
   },
   // Full About Me, paragraph by paragraph.
   about: [
-    "I am Ashutosh Sharma, a Computer Science undergraduate at BMS Institute of Technology & Management (CGPA: 8.7) passionate about AI, Backend Engineering, Cybersecurity, and scalable software systems.",
+    "I am Ashutosh Sharma, a Computer Science undergraduate at BMS Institute of Technology & Management (CGPA: 8.58) passionate about AI, Backend Engineering, Cybersecurity, and scalable software systems.",
     "I enjoy building production-grade full-stack applications, AI-powered developer tools, and automation platforms that solve real-world problems. My interests include Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), DevOps, distributed backend systems, and software architecture.",
-    "Beyond academics, I actively participate in hackathons, competitive programming, and open-source development. I have solved 1400+ LeetCode problems and enjoy transforming complex ideas into polished products.",
+    "Beyond academics, I actively participate in hackathons, competitive programming, and open-source development. I have solved 1000+ LeetCode problems and enjoy transforming complex ideas into polished products.",
     "I believe in writing clean, scalable, production-ready code while constantly exploring emerging technologies in AI and modern software engineering.",
   ],
 };
@@ -37,13 +38,13 @@ export interface Stat {
 }
 
 export const stats: Stat[] = [
-  { id: "leetcode", value: 1400, suffix: "+", label: "LeetCode Problems" },
-  { id: "hackathons", value: 7, suffix: "+", label: "Hackathon Awards" },
-  { id: "projects", value: 5, suffix: "", label: "Projects Built" },
+  { id: "leetcode", value: 1000, suffix: "+", label: "LeetCode Problems" },
+  { id: "hackathons", value: 9, suffix: "", label: "Hackathon Podiums" },
+  { id: "projects", value: 6, suffix: "", label: "Projects Built" },
   { id: "mentored", value: 100, suffix: "+", label: "Students Mentored" },
 ];
 
-export const LEETCODE = { count: 1400, suffix: "+" };
+export const LEETCODE = { count: 1000, suffix: "+" };
 
 // ---------- About: focus-area cards ----------
 
@@ -82,13 +83,13 @@ export const focusAreas: FocusArea[] = [
   {
     id: "cp",
     label: "Competitive Programming",
-    description: "1400+ LeetCode problems — efficient, not just functional.",
+    description: "1000+ LeetCode problems — efficient, not just functional.",
     icon: "code",
   },
   {
     id: "hackathons",
     label: "Hackathons",
-    description: "7+ podium finishes building fast under pressure.",
+    description: "9 podium finishes (2025–26) building fast under pressure.",
     icon: "trophy",
   },
   {
@@ -107,23 +108,47 @@ export interface ExperienceRole {
   role: string;
   bullets: string[];
   tags?: string[];
+  /** Human-readable date range, e.g. "Aug 2026 – Present". */
+  period?: string;
   icon: IconName;
 }
 
 export const experience: ExperienceRole[] = [
   {
+    id: "zarthi",
+    org: "Zarthi · Bengaluru",
+    role: "Backend Intern",
+    period: "Aug 2026 – Present",
+    icon: "server",
+    bullets: [
+      "Ramping on the team's Java/Spring Boot backend stack through an assigned prep track covering REST API design, layered controller-service-repository architecture, and persistence with Spring Data JPA.",
+      "Working through the existing codebase and local dev setup, covering Maven build, branching conventions, and PR review flow.",
+    ],
+    tags: ["Java", "Spring Boot", "Spring Data JPA", "Maven"],
+  },
+  {
     id: "genai-club",
     org: "GenAI Club, BMSIT&M",
     role: "Core Technical Member",
+    period: "Nov 2025 – Aug 2026",
     icon: "brain",
     bullets: [
-      "Built LGTM, an AI-powered GitHub PR review and CI/CD security platform.",
-      "Selected among the Top Teams at the Nirmith Hackathon.",
-      "Engineered a Tree-sitter AST parsing pipeline with PageRank-based repository context selection.",
-      "Reduced LLM token usage by nearly 10× compared to full-file review.",
-      "Added runtime CI/CD security checks using React, Node.js, MongoDB, Redis, and BullMQ.",
+      "Owned end-to-end backend for AgriSmart, a crop-advisory platform turning location, season, and soil inputs into crop, sowing-window, and fertilizer recommendations via a Node/Express REST API over MongoDB.",
+      "Cut third-party weather API calls by caching forecast responses behind a scheduled ingestion job, keeping advisory latency flat while pushing irrigation and extreme-weather alerts.",
+      "Built a voice-first advisory flow with speech-to-text input and audio output across 45+ languages for low-literacy regional users.",
+      "Replaced manual agronomist triage with a 38-class CNN classifier behind an inference endpoint, returning diagnosis and treatment from one leaf photo.",
+      "Prototyped a watchOS/Swift cardiac-arrest detector streaming live heart-rate, SpO2, and motion from Apple Watch, escalating unanswered alerts to the nearest hospital and emergency contact.",
     ],
-    tags: ["LLMs", "Node.js", "Redis", "BullMQ", "Tree-sitter"],
+    tags: ["Node.js", "Express", "MongoDB", "CNN", "Swift"],
+  },
+  {
+    id: "pals",
+    org: "PALS (Pan-IIT Alumni Leadership Series), IIT Madras",
+    role: "CSE Department Representative",
+    period: "2025 – Present",
+    icon: "user",
+    bullets: ["Organise inter-college hackathons."],
+    tags: ["Leadership", "Hackathons"],
   },
   {
     id: "iic",
@@ -141,11 +166,12 @@ export const experience: ExperienceRole[] = [
     id: "placement-cell",
     org: "Placement Cell, BMSIT&M",
     role: "Placement Coordinator",
+    period: "Nov 2024 – Present",
     icon: "briefcase",
     bullets: [
-      "Helped organize placement drives.",
+      "Organized placement drives.",
       "Coordinated aptitude tests.",
-      "Assisted in pre-placement talks.",
+      "Organized pre-placement talks.",
     ],
     tags: ["Leadership", "Coordination"],
   },
@@ -176,7 +202,8 @@ export interface Project {
   featured?: boolean;
   /** Shows a distinct "Flagship" badge — the single best project. */
   flagship?: boolean;
-  status: ProjectStatus;
+  /** Omit when the project's state isn't known — no pill is shown. */
+  status?: ProjectStatus;
   timeline?: string;
   tags?: string[];
   highlights?: string[];
@@ -190,9 +217,41 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "nexarch",
+    title: "NexArch — Agentic AI Full-Stack Code Generation Platform",
+    tagline:
+      "Fifteen agents taking a project from analysis to hardened, running code.",
+    description:
+      "An agentic code-generation platform where a DAG-scheduled mesh of 15 agents drives analysis, architecture, database design, code generation, and JWT/RBAC hardening — with a validation mesh gating each stage and a self-repair loop recovering failed nodes.",
+    techStack: [
+      "React 19",
+      "Node.js",
+      "Express 5",
+      "TypeScript",
+      "MySQL",
+      "Prisma",
+    ],
+    featured: true,
+    flagship: true,
+    timeline: "2026",
+    tags: ["AI Agents", "Full-Stack", "Developer Tools"],
+    highlights: [
+      "DAG-scheduled mesh of 15 agents with a validation mesh gating each stage",
+      "Self-repair loop that recovers failed nodes",
+      "Cut cost and latency per generation with a token-budgeted context engine over a Prisma-persisted knowledge graph",
+      "Result cache across stages and multi-provider LLM routing with retries and per-request token caps",
+      "21-module, 106-endpoint REST API with cookie-JWT auth and owner-scoped multi-tenancy",
+      "Run Engine that boots generated projects on auto-scanned ports",
+      "Covered by 28 test suites",
+    ],
+    githubUrl: "https://github.com/ashutoshsharma1309/nexarch",
+    accent: ["#f97316", "#eab308"],
+  },
+  {
     id: "lgtm",
-    title: "LGTM — AI Code Review & Repository Intelligence",
-    tagline: "An AI reviewer that understands your whole repo, not just the diff.",
+    title: "LGTM — AI Code Review & Repo-Health Intelligence",
+    tagline:
+      "An AI reviewer that understands your whole repo, not just the diff.",
     description:
       "An AI-powered GitHub PR review and CI/CD security platform. It parses entire repositories into ASTs, compresses them into compact context maps, and routes reviews across multiple LLM providers with per-key rate-limit isolation — cutting token usage by ~10× versus full-file review.",
     techStack: [
@@ -207,7 +266,7 @@ export const projects: Project[] = [
     featured: true,
     flagship: true,
     status: "in-progress",
-    timeline: "2025",
+    timeline: "2026",
     tags: ["AI", "Backend", "Developer Tools", "Security"],
     highlights: [
       "Parsed repositories using Tree-sitter AST across 12 programming languages",
@@ -217,15 +276,16 @@ export const projects: Project[] = [
       "Added per-key pooling, retries, and BYOK rate-limit isolation",
       "Implemented multi-agent indexing using BullMQ and Redis",
       "Built Socket.io live progress",
-      "Developed 20+ REST APIs",
-      "Added secure GitHub webhook verification",
+      "Developed 20 REST APIs",
+      "Added HMAC-verified GitHub webhooks",
     ],
+    githubUrl: "https://github.com/ashutoshsharma1309/lgtm",
     accent: ["#6366f1", "#0ea5e9"],
     caseStudy: {
       problem:
         "Sending whole files to an LLM for every PR is expensive, slow, and blind to the rest of the codebase — reviews miss cross-file context and burn tokens.",
       approach:
-        "Parse the repository into ASTs with Tree-sitter, rank symbols with PageRank to keep only what matters, and compress that into a ~4K-token repository map. Reviews are fanned out across providers via a BullMQ/Redis multi-agent indexer with per-key pooling and retries.",
+        "Parse the repository into ASTs with Tree-sitter, rank files via a PageRank graph to keep only what matters, and compress that into a ~4K-token repository map. Reviews are fanned out across providers via a BullMQ/Redis multi-agent indexer with per-key pooling and retries.",
       impact:
         "Reduced LLM token usage by nearly 10× versus full-file review while giving the model true repo-wide context — and earned a Top Team spot at the Nirmith Hackathon.",
       futureWork: [
@@ -237,7 +297,8 @@ export const projects: Project[] = [
   {
     id: "prepnext",
     title: "PrepNext — Campus Placement Platform",
-    tagline: "Everything a student needs to crack campus placements, in one place.",
+    tagline:
+      "Everything a student needs to crack campus placements, in one place.",
     description:
       "A complete campus placement preparation platform unifying recruiters, previous-year questions, DSA practice, and mock assessments behind a normalized PostgreSQL backend with Google OAuth and JWT auth, and QR-verifiable certificates.",
     techStack: [
@@ -314,30 +375,30 @@ export const projects: Project[] = [
     title: "AgriSmart",
     tagline: "An AI agronomist in every farmer's pocket.",
     description:
-      "Multi-feature agritech platform combining a crop advisory engine, CV-based leaf disease detector, hyperlocal weather alerts, and a multilingual farmer chatbot. The disease detector runs a fine-tuned CNN on uploaded leaf photos and returns diagnosis plus treatment steps in the farmer's own language.",
+      "A crop-advisory platform that turns location, season, and soil inputs into crop, sowing-window, and fertilizer recommendations via a Node/Express REST API over MongoDB. A 38-class CNN diagnoses disease from one leaf photo, and a voice-first flow serves low-literacy users across 45+ languages.",
     techStack: [
-      "React",
-      "FastAPI",
-      "PyTorch",
-      "TensorFlow",
-      "OpenWeather API",
-      "LangChain",
-      "PostgreSQL",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "CNN",
+      "Speech-to-Text",
+      "Weather API",
     ],
     status: "live",
-    timeline: "2024",
+    timeline: "2025–26",
     tags: ["Machine Learning", "Computer Vision", "Full-Stack"],
     highlights: [
-      "Fine-tuned CNN diagnoses leaf disease from a single phone photo",
-      "Treatment guidance delivered in the farmer's native language",
-      "Hyperlocal weather alerts + LangChain advisory chatbot in one app",
+      "38-class CNN classifier behind an inference endpoint returns diagnosis and treatment from one leaf photo",
+      "Voice-first advisory flow with speech-to-text input and audio output across 45+ languages",
+      "Forecasts cached behind a scheduled ingestion job — fewer third-party weather API calls, flat advisory latency",
+      "Irrigation and extreme-weather alerts",
     ],
     accent: ["#16a34a", "#65a30d"],
     caseStudy: {
       problem:
         "Smallholder farmers lose entire harvests to diseases they can't identify in time, and expert agronomists are scarce and expensive.",
       approach:
-        "A fine-tuned CNN classifies disease from a leaf photo and maps it to an actionable treatment plan, surfaced through a multilingual chatbot alongside hyperlocal weather data.",
+        "A fine-tuned CNN classifies disease from a leaf photo and maps it to an actionable treatment plan, delivered through a voice-first advisory flow (speech-to-text in, audio out, 45+ languages) alongside cached weather forecasts.",
       impact:
         "Turns a smartphone into a first-line crop diagnostic, putting expert-level advisory in the hands of farmers who'd otherwise have none.",
       futureWork: [
@@ -351,7 +412,7 @@ export const projects: Project[] = [
     title: "Cardiac Risk Predictor",
     tagline: "Wearable early-warning system for cardiac emergencies.",
     description:
-      "iOS + watchOS app that continuously streams heart rate and SpO₂ from HealthKit, runs an on-device anomaly detector for cardiac-risk signals, and auto-dispatches the user's live GPS coordinates to the nearest registered hospital — built for the worst case where the user can't reach their phone.",
+      "watchOS/Swift prototype that streams live heart rate, SpO₂, and motion from Apple Watch, detects cardiac-arrest risk signals, and escalates unanswered alerts to the nearest hospital and the user's emergency contact — built for the worst case where the user can't reach their phone.",
     techStack: [
       "Swift",
       "SwiftUI",
@@ -361,11 +422,11 @@ export const projects: Project[] = [
       "Firebase",
     ],
     status: "in-progress",
-    timeline: "2024",
+    timeline: "2025–26",
     tags: ["iOS", "watchOS", "HealthTech"],
     highlights: [
       "On-device anomaly detection on live HR + SpO₂ streams",
-      "Auto-dispatches GPS location to the nearest hospital, hands-free",
+      "Escalates unanswered alerts to the nearest hospital and emergency contact",
       "Designed around the user being incapacitated — zero interaction needed",
     ],
     accent: ["#dc2626", "#db2777"],
@@ -373,7 +434,7 @@ export const projects: Project[] = [
       problem:
         "Sudden cardiac events are often fatal because the victim can't call for help and bystanders don't know it's happening.",
       approach:
-        "Continuously monitor HealthKit vitals on the watch, run an on-device detector for cardiac-risk signatures, and auto-escalate live location to emergency services without requiring any user action.",
+        "Continuously monitor HealthKit vitals on the watch, run an on-device detector for cardiac-risk signatures, and escalate unanswered alerts to the nearest hospital and the user's emergency contact.",
       impact:
         "Closes the critical gap between an event and a response when seconds decide survival.",
       futureWork: [
@@ -420,13 +481,29 @@ export const skillCategories: SkillCategory[] = [
     id: "languages",
     title: "Languages",
     icon: "code",
-    skills: ["C", "C++", "Python", "Java", "JavaScript", "TypeScript", "Swift", "SQL"],
+    skills: [
+      "C",
+      "C++",
+      "Python",
+      "Java",
+      "JavaScript",
+      "TypeScript",
+      "Swift",
+      "SQL",
+    ],
   },
   {
     id: "backend",
     title: "Backend",
     icon: "server",
-    skills: ["Node.js", "Express.js", "FastAPI", "Flask", "React.js"],
+    skills: [
+      "Spring Boot",
+      "Node.js",
+      "Express.js",
+      "FastAPI",
+      "Flask",
+      "REST API design",
+    ],
   },
   {
     id: "infra",
@@ -441,6 +518,24 @@ export const skillCategories: SkillCategory[] = [
       "BullMQ",
       "Docker",
       "AWS",
+    ],
+  },
+  {
+    id: "frontend",
+    title: "Frontend",
+    icon: "layers",
+    skills: ["React.js", "Next.js", "Vite"],
+  },
+  {
+    id: "core",
+    title: "Core CS",
+    icon: "target",
+    skills: [
+      "Data Structures & Algorithms",
+      "Operating Systems",
+      "DBMS",
+      "Computer Networks",
+      "OOP",
     ],
   },
   {
@@ -570,6 +665,12 @@ export const trophies: Record<TrophyCategoryId, TrophyCategory> = {
         organization: "E-Cell Hackathon, BMSIT&M",
         date: "2025",
         prize: "🥈 2nd Prize",
+      },
+      {
+        id: "incseption",
+        title: "1st Prize",
+        organization: "inCSEption, BMSIT&M",
+        prize: "🥇 1st Prize",
       },
       {
         id: "kalarava",

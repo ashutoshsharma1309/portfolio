@@ -5,6 +5,16 @@ All notable changes to this project are documented here. The format is based on
 
 ## [Unreleased]
 
+### Changed (résumé sync, Nov 2026)
+- Content updated from the latest résumé: Zarthi Backend Intern role, GenAI
+  Club and PALS roles with dates, Placement Cell dates; NexArch added as a
+  flagship project (GitHub links for NexArch and LGTM); AgriSmart and Cardiac
+  Risk Predictor descriptions aligned; CGPA 8.58; LeetCode 1000+; 9 hackathon
+  podiums; inCSEption 1st Prize; Spring Boot, REST API design, Frontend and
+  Core CS skills.
+- Project `status` is now optional (no pill shown when unknown); multiple
+  flagship projects render as full-width cards.
+
 ### Added
 - New scroll-driven portfolio at `/`: editorial design system (Geist, Geist
   Mono, Instrument Serif; ink + amber tokens), interactive WebGL hero (a node

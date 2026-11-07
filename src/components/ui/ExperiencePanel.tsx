@@ -29,6 +29,11 @@ export function ExperiencePanel() {
                   {role.role}
                 </h3>
                 <div className="mt-0.5 text-sm text-gold/80">{role.org}</div>
+                {role.period && (
+                  <div className="mt-0.5 text-xs uppercase tracking-widest text-white/50">
+                    {role.period}
+                  </div>
+                )}
 
                 <ul className="mt-3 space-y-1.5">
                   {role.bullets.map((b) => (

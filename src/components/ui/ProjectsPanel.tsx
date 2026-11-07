@@ -133,7 +133,9 @@ function ProjectCard({
           rest, so the single best project reads as distinct at a glance. */}
       <div
         className={`pointer-events-none absolute -inset-px transition-opacity duration-500 ${
-          project.flagship ? "opacity-60 group-hover:opacity-100" : "opacity-0 group-hover:opacity-100"
+          project.flagship
+            ? "opacity-60 group-hover:opacity-100"
+            : "opacity-0 group-hover:opacity-100"
         }`}
         style={{
           background: `radial-gradient(420px circle at 100% 0%, ${project.accent[0]}22, transparent 60%)`,
@@ -165,7 +167,7 @@ function ProjectCard({
       </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        <StatusPill status={project.status} />
+        {project.status && <StatusPill status={project.status} />}
         {project.timeline && (
           <span className="text-xs text-white/55">{project.timeline}</span>
         )}
@@ -220,7 +222,9 @@ function ProjectCard({
               <div className="mt-4 space-y-3 border-l-2 border-gold/30 pl-4 text-sm leading-relaxed text-gray-300">
                 {project.caseStudy?.problem && (
                   <p>
-                    <span className="font-semibold text-gold/80">Problem. </span>
+                    <span className="font-semibold text-gold/80">
+                      Problem.{" "}
+                    </span>
                     {project.caseStudy.problem}
                   </p>
                 )}
@@ -308,8 +312,8 @@ export function ProjectsPanel() {
     >
       <p className="mb-6 text-sm leading-relaxed text-white/60">
         A curated selection of things I&apos;ve designed, built, and shipped —
-        from an AI code-review platform to a full-stack placement system. Expand
-        any card for the full case study.
+        from agentic code generation and AI code review to a full-stack
+        placement system. Expand any card for the full case study.
       </p>
 
       {featured.length > 0 && (
@@ -319,12 +323,7 @@ export function ProjectsPanel() {
           </h3>
           <div className="mb-8 flex flex-col gap-4">
             {featured.map((p, i) => (
-              <ProjectCard
-                key={p.id}
-                project={p}
-                index={i}
-                reduced={reduced}
-              />
+              <ProjectCard key={p.id} project={p} index={i} reduced={reduced} />
             ))}
           </div>
         </>

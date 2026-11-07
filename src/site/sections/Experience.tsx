@@ -32,7 +32,7 @@ export function Experience() {
           label="Experience"
           title="Built products, mentored peers, shipped under real constraints."
           accentWords={["real", "constraints."]}
-          intro="Technical and leadership roles at BMSIT&M."
+          intro="Engineering, technical, and leadership roles."
         />
 
         <div className="md:grid md:grid-cols-12 md:gap-10">
@@ -80,11 +80,19 @@ export function Experience() {
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: DUR.slow, ease: EASE_OUT }}
                 >
-                  <div className="eyebrow mb-3 flex items-center gap-3">
+                  <div className="eyebrow mb-3 flex flex-wrap items-center gap-x-3 gap-y-1">
                     <span className="text-accent">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span>{role.org}</span>
+                    {role.period && (
+                      <>
+                        <span aria-hidden="true" className="text-white/20">
+                          /
+                        </span>
+                        <span className="whitespace-nowrap">{role.period}</span>
+                      </>
+                    )}
                   </div>
                   <h3 className="text-3xl font-medium tracking-[-0.03em] text-fg md:text-4xl">
                     {role.role}
