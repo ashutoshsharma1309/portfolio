@@ -127,6 +127,13 @@ export function Scene() {
         outputColorSpace: SRGBColorSpace,
       }}
       style={{ background: "#0b1018" }}
+      // With alpha:false three.js clears with alpha 1, and drei's
+      // ContactShadows renders into its own target using that clear — which
+      // turns the whole shadow texture opaque and dims the entire floor ~42%.
+      // Clearing with alpha 0 keeps the shadow texture transparent where
+      // nothing is occluded; the main canvas has no alpha channel, so it is
+      // visually unaffected.
+      onCreated={({ gl }) => gl.setClearAlpha(0)}
     >
       <RoomQualityProvider onDprChange={handleDpr}>
         <Suspense fallback={null}>
