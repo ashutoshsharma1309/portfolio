@@ -31,8 +31,12 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
     experience: { position: [10, 9, 10], target: [0, 1.4, 0], fov: 30 },
     skills: { position: [10, 9, 10], target: [0, 1.4, 0], fov: 30 },
     aboutFrames: {
-      position: [-1.5, 3, 4.5],
-      target: [-3, 3, -4.9],
+      // Social frames: 2x2 grid centred at world ~(-1.6, 2.8, -4.85). The
+      // About panel covers the right 480px, so aim right of the grid to seat
+      // it in the centre of the visible left strip; pulled in so the wall top
+      // stays out of frame (no void band).
+      position: [0.3, 2.9, 2.65],
+      target: [-0.45, 2.7, -4.9],
       fov: 32,
     },
     projectsDesk: {
@@ -70,9 +74,12 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
     experience: { position: [12, 10, 12], target: [0, 1.4, 0], fov: 38 },
     skills: { position: [12, 10, 12], target: [0, 1.4, 0], fov: 38 },
     aboutFrames: {
-      position: [-1.0, 3, 5.5],
-      target: [-3, 3, -4.9],
-      fov: 40,
+      // 60vw panel on the right: aim right of the frame grid (~x -1.6) so it
+      // sits in the visible left ~40%; slightly narrower FOV keeps the wall
+      // top (y=5) at the edge of frame.
+      position: [1.2, 2.9, 3.6],
+      target: [0.65, 2.55, -4.9],
+      fov: 36,
     },
     projectsDesk: {
       position: [3.5, 3.4, 5.5],
@@ -114,8 +121,9 @@ export const CAMERA_VIEWS_BY_TIER: CameraPositions = {
     experience: { position: [13, 11, 13], target: [0, 1.4, 0], fov: 52 },
     skills: { position: [13, 11, 13], target: [0, 1.4, 0], fov: 52 },
     aboutFrames: {
-      position: [-0.3, 3, 5.0],
-      target: [-3, 3, -4.9],
+      // Full-screen panel hides the canvas on mobile; just centre the grid.
+      position: [-1.2, 3, 4.0],
+      target: [-1.6, 2.8, -4.9],
       fov: 50,
     },
     projectsDesk: {

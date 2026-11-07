@@ -25,3 +25,15 @@ export const useSceneStore = create<SceneState>((set) => ({
   resetToDefault: () => set({ activeHotspot: "default" }),
   setSceneStatus: (s) => set({ sceneStatus: s }),
 }));
+
+declare global {
+  interface Window {
+    /** Dev-only handle for automated screenshots, e.g.
+     *  window.__sceneStore.getState().setHotspot("rack"). */
+    __sceneStore?: typeof useSceneStore;
+  }
+}
+
+if (import.meta.env.DEV && typeof window !== "undefined") {
+  window.__sceneStore = useSceneStore;
+}

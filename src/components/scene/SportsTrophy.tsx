@@ -3,6 +3,10 @@
 // the trophy is placed clear of that disc and toward the open room/camera, where
 // it has an unobstructed line of sight (it used to be tucked in the back-right
 // corner and got hidden behind the rack).
+//
+// Finish: polished, lacquered gold plate (clearcoat on the high tier) on a
+// walnut upper plinth over a black Marquina-style marble tier, with a blank
+// brass plate, floating on a marble levitation base with an inlaid brass ring.
 
 import { Trophy } from "./Trophy";
 
@@ -11,15 +15,18 @@ export function SportsTrophy() {
     <Trophy
       position={[2.6, 0, 3.5]}
       hotspot="sportsTrophy"
-      metalColor="#d4a747"
+      finish="gold"
+      plinth="walnutMarble"
+      metalColor="#e6b45a"
       metalEmissive="#f4b942"
-      metalness={0.95}
-      roughness={0.15}
+      metalness={1}
+      roughness={0.08}
       ringColor="#f4b942"
       spotColor="#fff5d6"
       spotIntensity={2.5}
       spotDistance={5}
       tooltip="🏆 Sports & Athletics"
+      surfaceY={0.04}
     />
   );
 }

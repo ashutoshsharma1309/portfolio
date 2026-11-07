@@ -1,7 +1,35 @@
-import { Html } from "@react-three/drei";
-import { useSpring, animated, config } from "@react-spring/three";
+// Social photo frames on the back wall (github / linkedin / leetcode /
+// codeforces). Each is a real picture frame: a mitred walnut moulding swept
+// around the opening (grain turns at the 45° corners), a bevel-cut mat board,
+// the brand-colour print with its white icon (rendered from the SAME inline
+// SVG markup into a texture so it's lit and sits under the glass), and a glass
+// sheet that only adds reflections + a faint glare streak. A soft contact
+// shadow on the wall grounds each frame. Hover: smooth tilt/scale + a subtle
+// warm highlight; click opens the profile, exactly as before.
+
+import { useEffect, useMemo } from "react";
+import { useFrame } from "@react-three/fiber";
+import { useSpring, animated } from "@react-spring/three";
+import {
+  AdditiveBlending,
+  CanvasTexture,
+  Color,
+  LinearFilter,
+  LinearMipmapLinearFilter,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
+  PlaneGeometry,
+  SRGBColorSpace,
+  type BufferGeometry,
+} from "three";
 import { SOCIAL_LINKS, type SocialKey } from "../../config/links";
 import { useHotspotHover } from "../../hooks/useHotspotHover";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
+import { useRoomQuality } from "./quality";
+import { applyHoverEmissive, createPlastic, useDisposable, useHoverMix } from "./materials";
+import { createWalnut } from "./decor/decorMaterials";
+import { mitredFrameGeometry, type ProfilePt } from "./decor/decorGeometry";
+import { useDecorTextures } from "./decor/decorTextures";
 
 interface FrameDef {
   key: SocialKey;
@@ -38,11 +66,105 @@ const FRAMES: FrameDef[] = [
   },
 ];
 
+// --- Physical build (metres) ------------------------------------------------
+const OUTER = 0.85; // same footprint as before
+const MOULD_W = 0.062;
+const OPENING = OUTER - 2 * MOULD_W; // 0.726
+const MAT_BORDER = 0.0835;
+const WINDOW = OPENING - 2 * MAT_BORDER; // ≈ 0.559
+const PRINT = WINDOW + 0.014;
+/** Group origin sits 5 mm in front of the wall plaster. */
+const BACK_Z = -0.005;
+
+/** Walnut moulding cross-section: [inset from outer edge, height off wall]. */
+const MOULDING: ProfilePt[] = [
+  [0, 0],
+  [0, 0.032],
+  [0.003, 0.0395],
+  [0.01, 0.0425],
+  [0.03, 0.0425],
+  [0.042, 0.039],
+  [0.05, 0.032],
+  [0.056, 0.03],
+  [0.06, 0.03],
+  [0.062, 0.027],
+  [0.062, 0.018],
+];
+/** Mat board with a 45° bevel cut into the white core. */
+const MAT: ProfilePt[] = [
+  [0, 0.017],
+  [MAT_BORDER - 0.0055, 0.017],
+  [MAT_BORDER, 0.0128],
+];
+const GLASS_Z = 0.0205;
+const PRINT_Z = 0.0125;
+
+interface SharedDecor {
+  moulding: BufferGeometry;
+  mat: BufferGeometry;
+  plane: PlaneGeometry;
+  matMat: MeshStandardMaterial;
+  glassMat: MeshStandardMaterial;
+  shadowMat: MeshBasicMaterial;
+}
+
 // Rendered as a child of the BackWall group, so coordinates are LOCAL to the
 // wall. Wall center is at world (0, WALL_HEIGHT/2, -ROOM_HALF). The wall is
 // 0.15 thick, so its front face is at local z=+0.075. Frames sit just in
 // front at local z=+0.08.
 export function PhotoFrames() {
+  const q = useRoomQuality();
+  const glare = useDecorTextures("glare", 256, q.anisotropy);
+  const soft = useDecorTextures("softShadow", 128, q.anisotropy);
+
+  const geo = useDisposable(
+    () => ({
+      moulding: mitredFrameGeometry(OUTER, OUTER, MOULDING, {
+        hard: [1, 9],
+        uOffsets: [0.03, 0.17, 0.31, 0.43],
+      }),
+      mat: mitredFrameGeometry(OPENING, OPENING, MAT, { hard: [1] }),
+      plane: new PlaneGeometry(1, 1),
+    }),
+    [],
+  );
+  const mats = useDisposable(
+    () => ({
+      matMat: createPlastic(q, { color: "#f1ece2", roughness: 0.85, widthM: OPENING, heightM: OPENING, normalScale: 0.3 }),
+      glassMat: new MeshStandardMaterial({
+        color: "#000000",
+        roughness: 0.09,
+        metalness: 0,
+        transparent: true,
+        blending: AdditiveBlending,
+        depthWrite: false,
+        emissive: new Color("#ffffff"),
+        emissiveMap: glare.emissiveMap ?? null,
+        emissiveIntensity: 0.035,
+        envMapIntensity: 0.6,
+      }),
+      shadowMat: new MeshBasicMaterial({
+        color: "#120c08",
+        transparent: true,
+        opacity: 0.42,
+        alphaMap: soft.alphaMap ?? null,
+        depthWrite: false,
+        polygonOffset: true,
+        polygonOffsetFactor: -1,
+        polygonOffsetUnits: -1,
+      }),
+    }),
+    [q, glare, soft],
+  );
+  // Mat, print and glass sit 13–21 mm off the plaster: pull them forward in
+  // depth so low-precision depth buffers can't z-fight them with the wall.
+  for (const m of [mats.matMat, mats.glassMat]) {
+    m.polygonOffset = true;
+    m.polygonOffsetFactor = -3;
+    m.polygonOffsetUnits = -3;
+  }
+  const shared: SharedDecor = { ...geo, ...mats };
+
   return (
     <group position={[-1.6, 0.3, 0.08]}>
       {FRAMES.map((f, i) => {
@@ -50,28 +172,116 @@ export function PhotoFrames() {
         const row = Math.floor(i / 2);
         const x = -0.55 + col * 1.1;
         const y = 0.55 - row * 1.1;
-        return <Frame key={f.key} def={f} position={[x, y, 0]} />;
+        return <Frame key={f.key} def={f} position={[x, y, 0]} shared={shared} />;
       })}
     </group>
   );
 }
 
+/** Brand-colour print with the frame's own inline SVG icon drawn on it. */
+function usePrintTexture(def: FrameDef) {
+  const tex = useMemo(() => {
+    const S = 512;
+    const c = document.createElement("canvas");
+    c.width = c.height = S;
+    const ctx = c.getContext("2d");
+    if (ctx) {
+      ctx.fillStyle = def.bg;
+      ctx.fillRect(0, 0, S, S);
+    }
+    const t = new CanvasTexture(c);
+    t.colorSpace = SRGBColorSpace;
+    t.minFilter = LinearMipmapLinearFilter;
+    t.magFilter = LinearFilter;
+    t.anisotropy = 4;
+    return t;
+  }, [def]);
+
+  useEffect(() => {
+    let alive = true;
+    const c = tex.image as HTMLCanvasElement;
+    const ctx = c.getContext("2d");
+    const img = new Image();
+    // Same markup as before, just rasterised large for a crisp print.
+    // (an <img> source needs the SVG namespace; the inline markup omits it)
+    const svg = def.icon
+      .replace('width="40" height="40"', 'width="512" height="512"')
+      .replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" ');
+    img.onload = () => {
+      if (!alive || !ctx) return;
+      const S = c.width;
+      const icon = S * 0.46;
+      ctx.drawImage(img, (S - icon) / 2, (S - icon) / 2, icon, icon);
+      // faint print vignette / paper falloff
+      const g = ctx.createRadialGradient(S / 2, S / 2, S * 0.3, S / 2, S / 2, S * 0.75);
+      g.addColorStop(0, "rgba(0,0,0,0)");
+      g.addColorStop(1, "rgba(0,0,0,0.12)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, S, S);
+      tex.needsUpdate = true;
+    };
+    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    return () => {
+      alive = false;
+      img.onload = null;
+    };
+  }, [tex, def]);
+
+  useEffect(() => () => tex.dispose(), [tex]);
+  return tex;
+}
+
 function Frame({
   def,
   position,
+  shared,
 }: {
   def: FrameDef;
   position: [number, number, number];
+  shared: SharedDecor;
 }) {
   const { hovered, onPointerOver, onPointerOut } = useHotspotHover(`frame-${def.key}`);
+  const reducedMotion = usePrefersReducedMotion();
+  const q = useRoomQuality();
+  const mix = useHoverMix(hovered);
+  const print = usePrintTexture(def);
+  const walnut = useDecorTextures("walnut", q.textureSize, q.anisotropy);
 
-  // Spring-driven scale, Y-rotation tilt, and emissive glow on hover.
-  const { scale, rotY, glow, photoGlow } = useSpring({
+  // Smooth (no wobble) scale + 5° tilt toward the camera on hover. The frame
+  // hangs ~5 mm off the plaster, so it also lifts off the wall while tilting
+  // (sin 5° × 0.425 m × 1.08 ≈ 40 mm swing-back at the right edge) — no clipping.
+  const { scale, rotY, posZ } = useSpring({
     scale: hovered ? 1.08 : 1,
-    rotY: hovered ? (Math.PI / 180) * 5 : 0, // 5° tilt toward camera
-    glow: hovered ? 0.6 : 0,
-    photoGlow: hovered ? 0.6 : 0.25,
-    config: config.wobbly,
+    rotY: hovered ? (Math.PI / 180) * 5 : 0,
+    posZ: hovered ? 0.05 : 0,
+    config: { tension: 200, friction: 24 },
+    immediate: reducedMotion,
+  });
+
+  const mats = useDisposable(
+    () => ({
+      wood: createWalnut(q, walnut, { color: "#d8cfc8", clearcoat: 0.22 }),
+      print: new MeshStandardMaterial({
+        map: print,
+        roughness: 0.42,
+        metalness: 0,
+        emissive: new Color("#ffffff"),
+        emissiveMap: print,
+        emissiveIntensity: 0.06,
+        envMapIntensity: 0.8,
+        polygonOffset: true,
+        polygonOffsetFactor: -3,
+        polygonOffsetUnits: -3,
+      }),
+    }),
+    [q, print, walnut],
+  );
+
+  useFrame(() => {
+    const m = mix.current;
+    applyHoverEmissive(mats.wood, m, undefined, 0.05);
+    // the print brightens slightly on hover (old photoGlow 0.25 → 0.6)
+    mats.print.emissiveIntensity = 0.06 + m * 0.2;
   });
 
   const handleClick = (e: { stopPropagation: () => void }) => {
@@ -80,65 +290,45 @@ function Frame({
   };
 
   return (
-    <animated.group
-      position={position}
-      scale={scale}
-      rotation-y={rotY}
-    >
+    <group position={position}>
+      {/* Soft contact shadow on the plaster (sun is upper-right). Stays on the
+          wall while the frame lifts on hover. */}
+      <mesh
+        geometry={shared.plane}
+        material={shared.shadowMat}
+        position={[-0.014, -0.022, BACK_Z + 0.0015]}
+        scale={[OUTER / 0.8, OUTER / 0.8, 1]}
+      />
+    <animated.group position-z={posZ} scale={scale} rotation-y={rotY}>
       {/* Invisible enlarged tap target — sits in front of the visible frame
           and absorbs touch events with extra margin (1.4× geometry). */}
-      <mesh
-        position={[0, 0, 0.08]}
-        onPointerOver={onPointerOver}
-        onPointerOut={onPointerOut}
-        onClick={handleClick}
-      >
+      <mesh position={[0, 0, 0.08]} onPointerOver={onPointerOver} onPointerOut={onPointerOut} onClick={handleClick}>
         <boxGeometry args={[1.2, 1.2, 0.18]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
-      {/* Outer frame */}
-      <mesh
-        castShadow
-        onPointerOver={onPointerOver}
-        onPointerOut={onPointerOut}
-        onClick={handleClick}
-      >
-        <boxGeometry args={[0.85, 0.85, 0.06]} />
-        <animated.meshStandardMaterial
-          color="#f4ead2"
-          emissive="#f4b942"
-          emissiveIntensity={glow}
-          roughness={0.5}
+      <group position={[0, 0, BACK_Z]}>
+        {/* Mitred walnut moulding */}
+        <mesh
+          geometry={shared.moulding}
+          material={mats.wood}
+          onPointerOver={onPointerOver}
+          onPointerOut={onPointerOut}
+          onClick={handleClick}
         />
-      </mesh>
-      {/* Colored "photo" inset */}
-      <mesh position={[0, 0, 0.04]}>
-        <planeGeometry args={[0.7, 0.7]} />
-        <animated.meshStandardMaterial
-          color={def.bg}
-          emissive={def.bg}
-          emissiveIntensity={photoGlow}
+        {/* Bevel-cut mat board */}
+        <mesh geometry={shared.mat} material={shared.matMat} />
+        {/* Print (brand colour + icon) */}
+        <mesh geometry={shared.plane} material={mats.print} position={[0, 0, PRINT_Z]} scale={[PRINT, PRINT, 1]} />
+        {/* Glass: reflections + faint glare only */}
+        <mesh
+          geometry={shared.plane}
+          material={shared.glassMat}
+          position={[0, 0, GLASS_Z]}
+          scale={[OPENING, OPENING, 1]}
+          renderOrder={2}
         />
-      </mesh>
-      {/* Icon as Html overlay so it stays crisp */}
-      <Html
-        position={[0, 0, 0.041]}
-        center
-        transform
-        distanceFactor={2.0}
-        style={{ pointerEvents: "none" }}
-      >
-        <div
-          dangerouslySetInnerHTML={{ __html: def.icon }}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transform: "scale(2.5)",
-            pointerEvents: "none",
-          }}
-        />
-      </Html>
+      </group>
     </animated.group>
+    </group>
   );
 }
